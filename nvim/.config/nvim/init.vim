@@ -73,9 +73,10 @@ let mapleader = " "
 " Utils
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 inoremap <C-c> <esc>
+nnoremap Y y$
 
 " Replace all is aliased to S
-nnoremap S :%s//g<Left><Left>
+nnoremap S :%s//gc<Left><Left><Left>
 
 " Copying-pasting
 vnoremap <leader>p "_dP
@@ -86,6 +87,12 @@ nnoremap <leader>Y gg"+yG
 " Line manipulation
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+" Highlight yank
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
+ augroup END
 
 " yarn testing
 nnoremap <leader>wd :cd ~/peak<CR>
