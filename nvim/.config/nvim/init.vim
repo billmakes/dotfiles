@@ -16,9 +16,13 @@ set wildignore+=**/.git/*
 call plug#begin('~/.vim/plugged')
 
 Plug 'ap/vim-css-color'
+Plug 'mbbill/undotree'
 
 Plug 'tpope/vim-surround'
+
+" Git
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 " Autocomplete and LSP
 Plug 'neovim/nvim-lspconfig'
@@ -74,6 +78,7 @@ let mapleader = " "
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 inoremap <C-c> <esc>
 nnoremap Y y$
+nnoremap <F5> :UndotreeToggle<CR>
 
 " Replace all is aliased to S
 nnoremap S :%s//gc<Left><Left><Left>
