@@ -19,6 +19,7 @@ Plug 'ap/vim-css-color'
 Plug 'mbbill/undotree'
 
 Plug 'tpope/vim-surround'
+Plug 'preservim/nerdcommenter'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -27,6 +28,9 @@ Plug 'junegunn/gv.vim'
 " Autocomplete and LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+
+" Syntax highlight
+Plug 'baskerville/vim-sxhkdrc'
 
 " Telescope
 Plug 'nvim-lua/popup.nvim'

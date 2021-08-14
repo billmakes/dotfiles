@@ -1,0 +1,95 @@
+[global/wm]
+;https://github-wiki-see.page/m/polybar/polybar/wiki/Configuration
+margin-top = 0
+margin-bottom = 0
+
+[colors]
+background = #121212
+foreground = #CBCCC6
+
+[font]
+gothic = "OldLondon:size=18"
+operatormono = "OperatorMono-Book:size=14"
+
+; -- bars
+
+[bar/main]
+monitor = DP-0
+
+font-0 = ${font.gothic} 
+height = 27
+padding-right = 1 
+underline-size = 4
+
+modules-left = bspwm
+modules-center = time
+modules-right = scriptdate
+
+[bar/second]
+inherit = bar/main
+monitor = HDMI-0
+
+padding-right = 1 
+modules-center = 
+modules-left = bspwm
+modules-right = time
+
+; -- modules 
+
+[module/scriptdate]
+type = custom/script
+interval = 5.0
+exec = ~/bin/formatdate.sh  
+
+[module/time]
+type = internal/date
+interval = 1.0
+date = %r
+
+[module/bspwm]
+type = internal/bspwm
+
+; Only show workspaces defined on the same output as the bar
+; NOTE: The bspwm and XRandR monitor names must match, which they do by default.
+; But if you rename your bspwm monitors with bspc -n this option will no longer
+; behave correctly.
+; Default: true
+pin-workspaces = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Set the scroll cycle direction 
+; Default: true
+reverse-scroll = false
+
+; focused
+label-focused = %name%
+label-focused-background = #c32345
+label-focused-foreground = #4a101d
+label-focused-underline = #4a101d
+label-focused-border = 4
+label-focused-border-color = #4a101d
+label-focused-padding = 1
+
+; occupied
+label-occupied = %name%*
+label-occupied-padding = 1
+
+; urgent
+label-urgent = %name%!
+label-urgent-background = #121212
+label-urgent-underline = #fcef81
+label-urgent-padding = 1
+
+; empty
+label-empty = %name%
+;label-empty-foreground = #CBCCC6
+label-empty-padding = 1
+
+; vim:set ft=dosini:
