@@ -44,6 +44,7 @@ modules-right = time
 type = custom/script
 interval = 5.0
 exec = ~/bin/formatdate.sh  
+click-left = alacritty  --class calcurse -e calcurse
 
 [module/time]
 type = custom/script
