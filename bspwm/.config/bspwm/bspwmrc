@@ -32,5 +32,6 @@ feh --bg-scale ~/wallpapers/hermes.jpg
 
 bspc monitor HDMI-0 -s DP-0
 
+
 $HOME/.config/polybar/launch.sh
 

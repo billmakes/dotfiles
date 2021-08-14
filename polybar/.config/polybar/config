@@ -19,6 +19,8 @@ operatormono = "OperatorMono-Book:size=14"
 
 [bar/main]
 monitor = DP-0
+override-redirect = true
+wm-restack = bspwm
 
 font-0 = ${font.gothic} 
 height = 27
