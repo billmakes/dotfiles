@@ -15,6 +15,9 @@ set wildignore+=**/.git/*
 
 call plug#begin('~/.vim/plugged')
 
+" SQL
+Plug 'vim-scripts/dbext.vim'
+
 Plug 'ap/vim-css-color'
 Plug 'mbbill/undotree'
 
@@ -28,6 +31,9 @@ Plug 'junegunn/gv.vim'
 " Autocomplete and LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+
+" Go
+Plug 'fatih/vim-go'
 
 " Syntax highlight
 Plug 'baskerville/vim-sxhkdrc'

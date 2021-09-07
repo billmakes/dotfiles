@@ -47,10 +47,11 @@ require'lspconfig'.efm.setup{
   end,
   init_options = { documentFormatting = true },
   settings = {
-    rootMarkers = { "remaxweb/", ".git/" },
+    rootMarkers = { ".git/", "remaxweb/", ".prettierrc" },
     languages = {
       javascript = { prettier, eslint },
-      json = { prettier, eslint },
+      typescript = { prettier, eslint },
+      json = { prettier },
   	  vue = { eslint },
     }
   },
@@ -62,6 +63,10 @@ require'lspconfig'.efm.setup{
 }
 
 require'lspconfig'.clangd.setup{}
+
+require'lspconfig'.gopls.setup{
+  cmd = {"gopls", "serve"}
+}
 
 require'lspconfig'.tsserver.setup{
   on_attach = function(client)
@@ -101,7 +106,7 @@ require'lspconfig'.vuels.setup{
   }
 }
 EOF
-
+nnoremap K :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>ff :lua vim.lsp.buf.formatting_sync(nil, 5000)<CR>
 nnoremap <leader>ld :lua vim.lsp.diagnostic.set_loclist()<CR>

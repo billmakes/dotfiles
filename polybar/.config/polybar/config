@@ -14,7 +14,7 @@ focused-foreground = #4a101d
 [font]
 gothic = "OldLondon:size=18"
 operatormono = "OperatorMono-Book:size=14"
-
+default = "Tamsyn:pixelsize=16;0"
 ; -- bars
 
 [bar/main]
@@ -22,8 +22,8 @@ monitor = DP-0
 override-redirect = true
 wm-restack = bspwm
 
-font-0 = ${font.gothic} 
-height = 27
+font-0 = ${font.default} 
+height = 20
 padding-right = 1 
 underline-size = 4
 
@@ -46,7 +46,7 @@ modules-right = time
 type = custom/script
 interval = 5.0
 exec = ~/bin/formatdate.sh  
-click-left = alacritty  --class calcurse -e calcurse
+click-left = gsimplecal
 
 [module/time]
 type = custom/script

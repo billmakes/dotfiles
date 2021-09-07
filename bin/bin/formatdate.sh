@@ -9,4 +9,4 @@ DaySuffix() {
   esac
 }
 
-echo "It is the `date +%d``DaySuffix` of `date +%B`, the year `date +%Y`..."
+echo "`date +%A` `date +%d` `date +%B` `date +%Y`"

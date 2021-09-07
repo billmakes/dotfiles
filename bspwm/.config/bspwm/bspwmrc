@@ -6,7 +6,7 @@ bspc monitor DP-0 -d 1 2 3 4 5
 bspc monitor HDMI-0 -d 1 2 3 4 5 
 
 #focus options:
-bspc config focus_follows_pointer true
+# bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor false
 bspc config pointer_follows_focus false
 bspc config focus_by_distance true
@@ -23,12 +23,13 @@ bspc config gapless_monocle      true
 #applications:
 bspc rule -a 'Alacritty:calcurse' state=floating
 
-xrandr --output DP-0 --primary --mode 1920x1080 --rate 240 --rotate normal 
+xrandr --output DP-0 --primary --mode 1920x1080 --rate 120 --rotate normal 
 xrandr --output HDMI-0 --mode 1920x1080 --rate 75 --rotate normal --left-of DP-0
 
 xsetroot -cursor_name left_ptr &
 
-feh --bg-scale ~/wallpapers/hermes.jpg
+feh --bg-scale ~/walls/hermes.jpg
+xinput --set-prop 'SteelSeries SteelSeries Rival 710 Gaming Mouse' 300 -0.5
 
 bspc monitor HDMI-0 -s DP-0
 
