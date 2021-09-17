@@ -38,6 +38,9 @@ Plug 'fatih/vim-go'
 " Syntax highlight
 Plug 'baskerville/vim-sxhkdrc'
 
+" Indent lines
+Plug 'lukas-reineke/indent-blankline.nvim'
+
 " Telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'

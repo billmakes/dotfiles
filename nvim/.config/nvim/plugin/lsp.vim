@@ -106,7 +106,8 @@ require'lspconfig'.vuels.setup{
   }
 }
 EOF
-nnoremap K :lua vim.lsp.buf.hover()<CR>
+
+nnoremap <leader>k :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>ff :lua vim.lsp.buf.formatting_sync(nil, 5000)<CR>
 nnoremap <leader>ld :lua vim.lsp.diagnostic.set_loclist()<CR>
