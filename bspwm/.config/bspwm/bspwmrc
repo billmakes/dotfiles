@@ -28,7 +28,7 @@ xrandr --output HDMI-0 --mode 1920x1080 --rate 75 --rotate normal --left-of DP-0
 
 xsetroot -cursor_name left_ptr &
 
-feh --bg-scale ~/walls/hermes.jpg
+feh --bg-scale ~/walls/redsky.png
 xinput --set-prop 'SteelSeries SteelSeries Rival 710 Gaming Mouse' 300 -0.5
 
 bspc monitor HDMI-0 -s DP-0

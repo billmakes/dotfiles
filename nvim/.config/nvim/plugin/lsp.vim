@@ -47,8 +47,9 @@ require'lspconfig'.efm.setup{
   end,
   init_options = { documentFormatting = true },
   settings = {
-    rootMarkers = { ".git/", "remaxweb/", ".prettierrc" },
+    rootMarkers = { ".git/", ".prettierrc" },
     languages = {
+      html = { prettier },
       javascript = { prettier, eslint },
       typescript = { prettier, eslint },
       json = { prettier },
@@ -56,6 +57,7 @@ require'lspconfig'.efm.setup{
     }
   },
   filetypes = {
+    "html",
     "javascript",
     "json",
     "vue",

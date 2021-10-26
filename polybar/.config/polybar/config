@@ -8,8 +8,8 @@ background = #121212
 foreground = #CBCCC6
 
 ; focused
-focused-background = #c32345
-focused-foreground = #4a101d
+focused-background = #CBCCC6
+focused-foreground = #2b2b2b
 
 [font]
 gothic = "OldLondon:size=18"
@@ -25,7 +25,7 @@ wm-restack = bspwm
 font-0 = ${font.default} 
 height = 20
 padding-right = 1 
-underline-size = 4
+underline-size = 3
 
 modules-left = bspwm
 modules-center = time
