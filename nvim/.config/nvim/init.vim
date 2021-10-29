@@ -13,6 +13,8 @@ set wildignore+=**/android/*
 set wildignore+=**/ios/*
 set wildignore+=**/.git/*
 
+highlight Normal guibg=#121212
+
 call plug#begin('~/.vim/plugged')
 
 " SQL
@@ -58,7 +60,6 @@ Plug 'rbgrouleff/bclose.vim'
 
 " Project search
 Plug 'mileszs/ack.vim'
-Plug 'jremmen/vim-ripgrep'
 
 " Parsers
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " update the parsers on update
