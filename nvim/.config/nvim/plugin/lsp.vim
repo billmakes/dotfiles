@@ -40,6 +40,17 @@ local eslint = {
   formatStdin = true,
 }
 
+local null_ls = require("null-ls")
+null_ls.config({
+    sources = {
+      null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
+      null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
+      null_ls.builtins.formatting.prettier -- prettier, eslint, eslint_d, or prettierd
+    },
+})
+
+require("lspconfig")["null-ls"].setup({})
+
 require'lspconfig'.efm.setup{
   root_dir = require'lspconfig'.util.root_pattern(".prettierrc", ".git"),
   on_attach = function(client)
@@ -51,9 +62,9 @@ require'lspconfig'.efm.setup{
     languages = {
       html = { prettier },
       javascript = { prettier, eslint },
-      typescript = { prettier, eslint },
+      typescript = { eslint, prettier },
       json = { prettier },
-  	  vue = { eslint },
+  	  vue = { prettier, eslint },
     }
   },
   filetypes = {
@@ -127,7 +138,7 @@ require'lspconfig'.vuels.setup{
           defaultFormatter = {
             html = "prettier",
             css = "prettier", 
-            js = "prettier-eslint",
+            js = "prettier",
             sass = "sass-formatter",
           },
           options = {
