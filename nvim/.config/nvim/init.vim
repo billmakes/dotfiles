@@ -45,6 +45,9 @@ Plug 'fatih/vim-go'
 " Syntax highlight
 Plug 'baskerville/vim-sxhkdrc'
 
+" Comments
+Plug 'numToStr/Comment.nvim'
+
 " Indent lines
 Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -73,6 +76,8 @@ Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 lua << EOF
+require('Comment').setup()
+
 require'nvim-treesitter.configs'.setup{
   highlight = {
     enable = true,
