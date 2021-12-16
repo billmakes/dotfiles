@@ -81,48 +81,24 @@ require'lspconfig'.gopls.setup{
   cmd = {"gopls", "serve"}
 }
 
+local buf_map = function(bufnr, mode, lhs, rhs, opts)
+    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+        silent = true,
+    })
+end
+
 require'lspconfig'.tsserver.setup{
-    on_attach = function(client, bufnr)
+on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
         local ts_utils = require("nvim-lsp-ts-utils")
-
-        -- defaults
-        ts_utils.setup {
-            debug = false,
-            disable_commands = false,
-            enable_import_on_completion = true,
-            import_on_completion_timeout = 5000,
-
-            -- eslint
-            eslint_enable_code_actions = true,
-            eslint_bin = "eslint",
-            eslint_args = {"-f", "json", "--stdin", "--stdin-filename", "$FILENAME"},
-            eslint_enable_disable_comments = true,
-
-	    -- experimental settings!
-            -- eslint diagnostics
-            eslint_enable_diagnostics = true,
-            eslint_diagnostics_debounce = 250,
-
-            -- formatting
-            enable_formatting = true,
-            formatter = "prettier",
-            formatter_args = {"--stdin-filepath", "$FILENAME"},
-            format_on_save = true,
-            no_save_after_format = false,
-
-            -- parentheses completion
-            complete_parens = false,
-            signature_help_in_parens = true,
-
-	    -- update imports on file move
-	    update_imports_on_move = false,
-	    require_confirmation_on_move = false,
-	    watch_dir = "/src",
-        }
-
-        -- required to enable ESLint code actions and formatting
+        ts_utils.setup({})
         ts_utils.setup_client(client)
-    end
+        buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+        buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+        buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+        on_attach(client, bufnr)
+    end,
 }
 
 require'lspconfig'.vuels.setup{
