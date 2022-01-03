@@ -35,12 +35,14 @@ return require("packer").startup(function()
     })
 
     -- additional functionality
+    use_with_config("hrsh7th/vim-vsnip", "vsnip") -- snippets
     use({
         "hrsh7th/nvim-cmp", -- completion
         requires = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "hrsh7th/cmp-vsnip",
             "onsails/lspkind-nvim",
             "folke/lua-dev.nvim",
         },

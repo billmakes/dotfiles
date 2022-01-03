@@ -6,6 +6,16 @@ cmp.setup({
     formatting = {
         format = require("lspkind").cmp_format(),
     },
+    snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+        get_trigger_characters = function(trigger_characters)
+            return vim.tbl_filter(function(char)
+                return char ~= " " and char ~= "\t"
+            end, trigger_characters)
+        end,
+    },
     completion = {
         completeopt = "menu,menuone,noinsert",
         get_trigger_characters = function(trigger_characters)
@@ -31,6 +41,7 @@ cmp.setup({
     sources = {
         { name = "nvim_lsp" },
         { name = "buffer" },
+        { name = "vsnip", priority = 9999 },
         { name = "path" },
     },
 })
