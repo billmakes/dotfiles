@@ -22,6 +22,9 @@ return require("packer").startup(function()
     -- go
     use("fatih/vim-go")
 
+    -- search
+    use_with_config("mileszs/ack.vim", "ack")
+
     -- text objects
     use("wellle/targets.vim") -- many useful additional text objects
     use({
@@ -35,6 +38,7 @@ return require("packer").startup(function()
     })
 
     -- additional functionality
+    use_with_config("airblade/vim-rooter", "rooter") -- rooter
     use_with_config("hrsh7th/vim-vsnip", "vsnip") -- snippets
     use({
         "hrsh7th/nvim-cmp", -- completion
