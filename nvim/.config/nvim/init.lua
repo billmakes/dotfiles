@@ -23,6 +23,7 @@ vim.opt.timeoutlen = 500
 vim.opt.shortmess:append("cA")
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.autoindent = true
+vim.opt.diffopt:append("vertical")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro rnu"
 
@@ -46,7 +47,7 @@ vim.g.gruvbox_contrast_dark = "hard"
 vim.g.gruvbox_italic = 1
 vim.api.nvim_command([[
     augroup ChangeBackgroudColour
-        autocmd colorscheme * :hi normal guibg=#121212
+        autocmd colorscheme * :hi normal guibg=none
     augroup END
 ]])
 vim.cmd("colorscheme gruvbox")

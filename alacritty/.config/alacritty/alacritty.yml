@@ -35,6 +35,7 @@ window:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
   decorations: full
+  opacity: 0.95
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
