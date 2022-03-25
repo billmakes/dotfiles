@@ -39,19 +39,20 @@ return require("packer").startup(function()
 
     -- additional functionality
     use_with_config("airblade/vim-rooter", "rooter") -- rooter
-    use_with_config("hrsh7th/vim-vsnip", "vsnip") -- snippets
+
     use({
         "hrsh7th/nvim-cmp", -- completion
         requires = {
+            "hrsh7th/vim-vsnip",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
-            "hrsh7th/cmp-vsnip",
             "onsails/lspkind-nvim",
             "folke/lua-dev.nvim",
         },
         config = config("cmp"),
     })
+
     use({
         "nvim-telescope/telescope.nvim", -- fuzzy finder
         config = config("telescope"),
@@ -68,6 +69,10 @@ return require("packer").startup(function()
     use("b0o/schemastore.nvim") -- simple access to json-language-server schemae
     use("jose-elias-alvarez/null-ls.nvim") -- transforms CLI output / Lua code into language server diagnostics, formatting, and more
     use("jose-elias-alvarez/nvim-lsp-ts-utils") -- improves TypeScript development experience
+
+    -- rust
+    use("rust-lang/rust.vim")
+    use_with_config("simrat39/rust-tools.nvim", "rust-tools")
 
     -- treesitter
     use({

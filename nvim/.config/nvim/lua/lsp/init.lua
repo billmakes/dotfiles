@@ -97,6 +97,7 @@ for _, server in ipairs({
     "null-ls",
     "sumneko_lua",
     "tsserver",
+    "rust_analyzer",
 }) do
     require("lsp." .. server).setup(on_attach, capabilities)
 end

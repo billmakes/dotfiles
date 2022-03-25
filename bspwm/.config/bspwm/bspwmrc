@@ -11,7 +11,7 @@ bspc config pointer_follows_focus false
 bspc config focus_by_distance true
 bspc config history_aware_focus false
 
-bspc config border_width 2
+bspc config border_width 3
 bspc config window_gap 5
 bspc config top_padding 30
 
@@ -21,10 +21,14 @@ bspc config gapless_monocle true
 
 xsetroot -cursor_name left_ptr &
 
-feh --bg-scale ~/walls/bladerunner.png
+feh --bg-scale ~/walls/clouds.jpg
 xinput --set-prop 'SteelSeries SteelSeries Rival 710 Gaming Mouse' 300 -0.5
 
 bspc monitor HDMI-0 -s DP-0
+
+gummy start &
+gummy -t 5500 &
+dunst &
 
 #$HOME/.config/polybar/launch.sh
 xfce4-panel --disable-wm-check &

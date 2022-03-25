@@ -10,6 +10,9 @@ super + Return
 super + @space
   rofi -modi run,drun,window -show drun -show-icons -sidebar-mode 
 
+super + w
+  rofi -modi run,drun,window -show window -show-icons -sidebar-mode 
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -19,8 +22,8 @@ super + Escape
 #
 
 # quit/restart bspwm
-super + alt + {q,r}
-	bspc {quit,wm -r}
+# super + alt + {q,r}
+#	bspc {quit,wm -r}
 
 # close and kill
 super + {_,shift + }q
