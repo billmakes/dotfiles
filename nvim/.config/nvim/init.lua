@@ -88,6 +88,9 @@ u.xmap("<", "<gv")
 -- highlight on yank
 vim.cmd('autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })')
 
+-- test
+u.lua_command("Scratch", "require'tools'.whid()")
+
 -- source remaining config
 require("plugins")
 require("lsp")
