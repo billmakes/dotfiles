@@ -89,7 +89,7 @@ font:
 colors:
   # Default colors
   primary:
-    background: "#121212"
+    background: "#0E1E1E"
     # soft contrast: background = '#32302f'
     foreground: "#ebdbb2"
 
