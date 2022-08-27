@@ -18,15 +18,17 @@ window:
   # Specified in number of columns/lines, not pixels.
   # If both are `0`, this setting is ignored.
   dimensions:
-    columns: 90
-    lines: 25
+    columns: 0
+    lines: 0 
+    # columns: 90
+    # lines: 25
 
   # Window padding (changes require restart)
   #
   # Blank space added around the window in pixels. This padding is not scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 2
+    x: 2 
     y: 2
 
   # Window decorations
@@ -34,7 +36,7 @@ window:
   # Values for `decorations`:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
-  decorations: full
+  decorations: none
   opacity: 0.95
 
 scrolling:

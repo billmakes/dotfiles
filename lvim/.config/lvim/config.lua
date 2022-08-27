@@ -21,6 +21,7 @@ lvim.colorscheme = "gruvbox"
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<C-g>"] = ":lua vim.diagnostic.open_float(0, { scope = 'line', border = 'single' })<cr>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -178,16 +179,14 @@ linters.setup {
   vue = { "eslint", "eslint_d" }
 }
 
--- Additional Plugins
-lvim.plugins = {
-  { "folke/tokyonight.nvim" },
-  { "ellisonleao/gruvbox.nvim" },
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
-}
+-- Language Specific
+-- =========================================
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {
+  "rust_analyzer",
+})
 
+-- Additional Plugins
+require("user.plugins").config()
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
