@@ -1,0 +1,6 @@
+configuration {
+ modi: "window,drun,ssh,combi";
+ font: "Operator Mono 14";
+ combi-modi: "window,drun,ssh";
+ }
+@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
