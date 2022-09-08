@@ -5,6 +5,7 @@ M.config = function()
     { "nvim-treesitter/nvim-treesitter-context" },
     { "folke/tokyonight.nvim" },
     { "ellisonleao/gruvbox.nvim" },
+    { "ayu-theme/ayu-vim" },
     {
       "folke/trouble.nvim",
       cmd = "TroubleToggle",

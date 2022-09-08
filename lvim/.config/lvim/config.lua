@@ -10,10 +10,11 @@ an executable
 
 -- custom
 vim.opt.relativenumber = true
+vim.opt.showtabline = 0
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "gruvbox"
+lvim.colorscheme = "ayu"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -22,6 +23,7 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<C-g>"] = ":lua vim.diagnostic.open_float(0, { scope = 'line', border = 'single' })<cr>"
+lvim.keys.normal_mode["gd"] = ":lua vim.lsp.buf.definition()<cr>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -202,4 +204,4 @@ require("user.plugins").config()
 -- })
 
 -- transparent bg
-vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=#0e1e1e"
+-- vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=#0e1e1e"
