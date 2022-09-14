@@ -245,11 +245,6 @@ _G.packer_plugins = {
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/vim-bbye",
     url = "https://github.com/moll/vim-bbye"
   },
-  ["vim-vinegar"] = {
-    loaded = true,
-    path = "/home/bill/.local/share/nvim/site/pack/packer/start/vim-vinegar",
-    url = "https://github.com/tpope/vim-vinegar"
-  },
   ["which-key.nvim"] = {
     loaded = true,
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/which-key.nvim",
