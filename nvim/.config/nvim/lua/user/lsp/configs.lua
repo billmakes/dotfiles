@@ -48,9 +48,9 @@ mason_lspconfig.setup({
 	automatic_installation = true,
 })
 
-local servers = { "jsonls", "sumneko_lua" }
+local servers = { "jsonls", "sumneko_lua", "omnisharp" }
 
--- Then we set up manual servers 
+-- Then we set up manual servers
 for _, server in pairs(servers) do
 	local opts = {
 		on_attach = require("user.lsp.handlers").on_attach,
@@ -62,3 +62,17 @@ for _, server in pairs(servers) do
 	end
 	lspconfig[server].setup(opts)
 end
+
+lspconfig.arduino_language_server.setup({
+	cmd = {
+		"arduino-language-server",
+		"-cli-config",
+		"/home/bill/.arduino15/arduino-cli.yaml",
+		"-fqbn",
+		"arduino:avr:uno",
+		"-cli",
+		"arduino-cli",
+		"-clangd",
+		"clangd",
+	},
+})
