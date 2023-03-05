@@ -1,6 +1,6 @@
 vim.cmd([[
 try
-  colorscheme ayu
+  colorscheme jellybeans-nvim
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark

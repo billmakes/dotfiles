@@ -21,7 +21,7 @@ bspc config gapless_monocle true
 
 xsetroot -cursor_name left_ptr &
 
-feh --bg-scale ~/walls/clouds.jpg
+feh --bg-tile ~/walls/bluetile.png
 xinput --set-prop 'SteelSeries SteelSeries Rival 710 Gaming Mouse' 300 -0.5
 
 bspc monitor HDMI-0 -s DP-0

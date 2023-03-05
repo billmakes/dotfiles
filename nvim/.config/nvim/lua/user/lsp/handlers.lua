@@ -3,10 +3,10 @@ local M = {}
 -- TODO: backfill this to template
 M.setup = function()
 	local signs = {
-		{ name = "DiagnosticSignError", text = "" },
-		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignError", text = "e" },
+		{ name = "DiagnosticSignWarn", text = "w" },
+		{ name = "DiagnosticSignHint", text = "h" },
+		{ name = "DiagnosticSignInfo", text = "i" },
 	}
 
 	for _, sign in ipairs(signs) do
@@ -84,21 +84,21 @@ M.on_attach = function(client, bufnr)
 	lsp_highlight_document(client)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits",
-	},
-}
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.resolveSupport = {
+-- 	properties = {
+-- 		"documentation",
+-- 		"detail",
+-- 		"additionalTextEdits",
+-- 	},
+-- }
 
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then
 	return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+-- M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 return M

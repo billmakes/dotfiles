@@ -10,13 +10,12 @@ end
 local diagnostics = {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
-	symbols = { error = " ", warn = " ", info = " ", hint = " " },
+  symbols = {error = "", warn = "", info = "", hint = ""},
 	cond = hide_in_width,
 }
 
 local diff = {
 	"diff",
-	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
 	cond = hide_in_width,
 }
 

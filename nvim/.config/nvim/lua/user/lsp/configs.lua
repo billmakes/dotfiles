@@ -38,17 +38,17 @@ mason_lspconfig.setup_handlers({
 		})
 	end,
 
-	["rust_analyzer"] = function()
-		require("rust-tools").setup({})
-	end,
+	-- ["rust_analyzer"] = function()
+	-- 	require("rust-tools").setup({})
+	-- end,
 })
 
 mason_lspconfig.setup({
-	ensure_installed = { "sumneko_lua", "rust_analyzer" },
+	ensure_installed = { "lua_ls", "rust_analyzer" },
 	automatic_installation = true,
 })
 
-local servers = { "jsonls", "sumneko_lua", "omnisharp" }
+local servers = { "jsonls", "lua_ls" }
 
 -- Then we set up manual servers
 for _, server in pairs(servers) do
@@ -62,17 +62,3 @@ for _, server in pairs(servers) do
 	end
 	lspconfig[server].setup(opts)
 end
-
-lspconfig.arduino_language_server.setup({
-	cmd = {
-		"arduino-language-server",
-		"-cli-config",
-		"/home/bill/.arduino15/arduino-cli.yaml",
-		"-fqbn",
-		"arduino:avr:uno",
-		"-cli",
-		"arduino-cli",
-		"-clangd",
-		"clangd",
-	},
-})
