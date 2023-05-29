@@ -83,7 +83,7 @@ return packer.startup(function(use)
   })
 
   -- Godot
-  -- use("habamax/vim-godot")
+  use("habamax/vim-godot")
   -- use({
   --   "simrat39/rust-tools.nvim",
   --   config = function()
@@ -93,6 +93,11 @@ return packer.startup(function(use)
 
   -- DAP
   -- use({ "puremourning/vimspector" })
+  use({ "mfussenegger/nvim-dap" })
+  use({ "rcarriga/nvim-dap-ui" })
+
+  -- Jest testing
+  use({ "David-Kunz/jester" })
 
   -- Nav
   use({ "kevinhwang91/rnvimr" })
@@ -106,7 +111,6 @@ return packer.startup(function(use)
     run = ":TSUpdate"
   })
   use({ "nvim-treesitter/nvim-treesitter-context" })
-  -- use({ "nvim-treesitter/nvim-treesitter-angular" })
 
   -- Git
   use({ "lewis6991/gitsigns.nvim" })

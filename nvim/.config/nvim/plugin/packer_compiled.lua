@@ -154,6 +154,11 @@ _G.packer_plugins = {
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/jellybeans-nvim",
     url = "https://github.com/metalelf0/jellybeans-nvim"
   },
+  jester = {
+    loaded = true,
+    path = "/home/bill/.local/share/nvim/site/pack/packer/start/jester",
+    url = "https://github.com/David-Kunz/jester"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/lualine.nvim",
@@ -183,6 +188,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/bill/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/bill/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -238,6 +253,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bill/.local/share/nvim/site/pack/packer/start/vim-bbye",
     url = "https://github.com/moll/vim-bbye"
+  },
+  ["vim-godot"] = {
+    loaded = true,
+    path = "/home/bill/.local/share/nvim/site/pack/packer/start/vim-godot",
+    url = "https://github.com/habamax/vim-godot"
   },
   ["which-key.nvim"] = {
     loaded = true,

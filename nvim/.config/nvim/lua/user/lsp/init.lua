@@ -5,4 +5,6 @@ end
 
 require("user.lsp.configs")
 require("user.lsp.handlers").setup()
+require("user.lsp.gdscript")
 require("user.lsp.ruff-lsp")
+require("user.lsp.clangd")
