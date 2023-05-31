@@ -20,12 +20,12 @@ keymap({ "n", "x" }, "H", "^")
 keymap({ "n", "x" }, "L", "g_")
 
 -- Move text up and down
-keymap("n", "<A-k>", "<cmd>m .-2<cr>==", opts)
-keymap("n", "<A-j>", "<cmd>m .+1<cr>==", opts)
-keymap("i", "<A-k>", "<Esc><cmd>m .-2<CR>==gi", opts)
-keymap("i", "<A-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
-keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
-keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
+keymap("n", "<S-k>", "<cmd>m .-2<cr>==", opts)
+keymap("n", "<S-j>", "<cmd>m .+1<cr>==", opts)
+keymap("i", "<S-k>", "<Esc><cmd>m .-2<CR>==gi", opts)
+keymap("i", "<S-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
+keymap("v", "<S-k>", ":m '<-2<cr>gv=gv", opts)
+keymap("v", "<S-j>", ":m '>+1<cr>gv=gv", opts)
 
 -- Move while insert
 keymap("i", "<C-h>", "<Left>", opts)
@@ -33,11 +33,11 @@ keymap("i", "<C-j>", "<Down>", opts)
 keymap("i", "<C-k>", "<Up>", opts)
 keymap("i", "<C-l>", "<Right>", opts)
 
+-- Escape
+keymap("n", "<C-c>", "<Esc>")
+
 -- Save
 keymap("n", "<C-s>", "<cmd>w<cr>")
-
--- Quit
-keymap("n", "<C-q>", "<cmd>q<cr>")
 
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -56,7 +56,8 @@ keymap("n", "<C-f>", "<cmd>lua vim.lsp.buf.format{async = true}<cr>", opts)
 
 -- Buffer
 keymap("n", "<TAB>", "<cmd>BufferLineCycleNext<cr>", opts) -- next buffer
-keymap("n", "<S-TAB>", "<cmd>BufferLineCyclePrev<cr>", opts) -- previous buffer
+-- keymap("n", "<S-TAB>", "<cmd>BufferLineCyclePrev<cr>", opts) -- previous buffer
+keymap("n", "<S-TAB>", "<C-^>", opts) -- previous buffer
 keymap("n", "<leader>q", "<cmd>bdelete<cr>", { desc = "Delete buffer" }, opts) -- close buffer
 
 -- No hl search
@@ -64,7 +65,7 @@ keymap("n", "<ESC>", "<cmd>nohlsearch<cr>", opts)
 
 -- Telescope
 M.Telescope = {
-  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+  { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find files" },
   { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
   { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
 }

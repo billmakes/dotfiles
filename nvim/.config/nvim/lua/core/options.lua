@@ -51,7 +51,7 @@ opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
 opt.timeout = true
-opt.timeoutlen = 400
+opt.timeoutlen = 550
 opt.undofile = true
 
 opt.updatetime = 250
@@ -65,14 +65,14 @@ for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
   vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
-vim.cmd([[
+vim.cmd [[
 try
   colorscheme jellybeans-nvim
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark
 endtry
-]])
+]]
 
 -- Remove "How to disable mouse"
 vim.cmd [[

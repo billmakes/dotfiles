@@ -11,7 +11,7 @@ return {
     insert_mappings = true,
     persist_size = true,
     close_on_exit = true,
-    shell = "/usr/bin/zsh",
+    shell = "/bin/zsh",
     float_opts = {
       border = "single",
     },
