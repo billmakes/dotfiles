@@ -34,7 +34,7 @@ keymap("i", "<C-k>", "<Up>", opts)
 keymap("i", "<C-l>", "<Right>", opts)
 
 -- Escape
-keymap("n", "<C-c>", "<Esc>")
+keymap("n", "<C-c>", "<C-c>")
 
 -- Save
 keymap("n", "<C-s>", "<cmd>w<cr>")
