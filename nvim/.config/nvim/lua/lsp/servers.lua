@@ -6,6 +6,8 @@ local servers = {
   "cssls", -- CSS lsp
   "tsserver", -- JavaScript, TypeScript lsp
   "rome", -- JavaScript, TypeScript, JSON Linter & Formatter
+  "zls", -- Zig lsp
+  "pyright",
   "clangd", -- C, C++ lsp
   "bashls", -- Bash lsp
   "rust_analyzer", -- Rust lsp
@@ -19,6 +21,7 @@ for _, server in pairs(servers) do
   server = vim.split(server, ",")[1]
   local require_ok, conf_opts = pcall(require, "lsp.settings." .. server)
   if require_ok then
+    -- print(vim.inspect(conf_opts))
     opts = vim.tbl_deep_extend("force", conf_opts, opts)
   end
   require("lspconfig")[server].setup(opts)

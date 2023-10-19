@@ -20,10 +20,10 @@ keymap({ "n", "x" }, "H", "^")
 keymap({ "n", "x" }, "L", "g_")
 
 -- Move text up and down
-keymap("n", "<S-k>", "<cmd>m .-2<cr>==", opts)
-keymap("n", "<S-j>", "<cmd>m .+1<cr>==", opts)
-keymap("i", "<S-k>", "<Esc><cmd>m .-2<CR>==gi", opts)
-keymap("i", "<S-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
+-- keymap("n", "<S-k>", "<cmd>m .-2<cr>==", opts)
+-- keymap("n", "<S-j>", "<cmd>m .+1<cr>==", opts)
+-- keymap("i", "<S-k>", "<Esc><cmd>m .-2<CR>==gi", opts)
+-- keymap("i", "<S-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
 keymap("v", "<S-k>", ":m '<-2<cr>gv=gv", opts)
 keymap("v", "<S-j>", ":m '>+1<cr>gv=gv", opts)
 
@@ -84,7 +84,7 @@ keymap("n", "gd", "<cmd>Lspsaga goto_definition<cr>", opts)
 keymap("n", "<leader>lb", "<cmd>Lspsaga show_buf_diagnostics<cr>", { desc = "Show buffer diagnostic" }, opts)
 keymap("n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", { desc = "Next diagnostic" }, opts)
 keymap("n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { desc = "Previous diagnostic" }, opts)
-keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", opts)
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 keymap("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Lsp Info" }, opts)
 
 -- DAP

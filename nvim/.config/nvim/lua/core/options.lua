@@ -1,5 +1,6 @@
 local opt = vim.opt
 
+opt.swapfile = false
 opt.laststatus = 0 -- global statusline
 opt.grepformat = "%f:%l:%c:%m"
 opt.inccommand = "nosplit"
@@ -67,7 +68,8 @@ end
 
 vim.cmd [[
 try
-  colorscheme jellybeans-nvim
+  set background=dark
+  colorscheme gruvbox
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark

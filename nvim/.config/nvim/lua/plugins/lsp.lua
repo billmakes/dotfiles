@@ -23,6 +23,7 @@ return {
           "emmet_ls",
           "cssls",
           "rome",
+          "zls",
           "bashls",
           "rust_analyzer",
           "tsserver",

@@ -62,3 +62,11 @@ require("lazy").setup {
     },
   },
 }
+
+require("gruvbox").setup {
+  dpalette_overrides = {
+    bg0 = "#990000",
+  },
+}
+
+vim.cmd "colorscheme gruvbox"

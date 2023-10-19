@@ -33,6 +33,7 @@ return {
         formatting.clang_format, -- C/C++
         formatting.rustfmt, -- Rust
         formatting.rome, -- JavaScript, TypeScript, JSON
+        formatting.black, -- Python
       },
     }
   end,
