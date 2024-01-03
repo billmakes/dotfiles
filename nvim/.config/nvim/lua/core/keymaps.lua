@@ -88,7 +88,7 @@ keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 keymap("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Lsp Info" }, opts)
 
 -- DAP
-keymap("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", opts)
+-- keymap("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", opts)
 keymap("n", "<F9>", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
 keymap("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", opts)
 keymap("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", opts)
@@ -97,6 +97,8 @@ keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
 keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
+-- love2d
+keymap("n", "<F5>", "<cmd>!love .<cr>", opts)
 -- Toggle Terminal
 M.ToggleTerm = {
   { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "ToggleTerm" },
