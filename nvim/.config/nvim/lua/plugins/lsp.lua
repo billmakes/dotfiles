@@ -31,21 +31,6 @@ return {
       },
     },
     {
-      "j-hui/fidget.nvim",
-      opts = {
-        window = {
-          blend = 0,
-        },
-        text = {
-          spinner = { "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥" },
-          done = "",
-        },
-        timer = {
-          spinner_rate = 200,
-        },
-      },
-    },
-    {
       "ray-x/lsp_signature.nvim",
       opts = {
         bind = true,
