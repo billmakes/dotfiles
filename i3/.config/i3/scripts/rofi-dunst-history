@@ -1,0 +1,135 @@
+#!/bin/bash
+set -euo pipefail
+
+for dependency in dunstctl jq rofi; do
+  command -v "$dependency" >/dev/null 2>&1 || {
+    printf 'Missing dependency: %s\n' "$dependency" >&2
+    exit 1
+  }
+done
+
+if command -v html2text >/dev/null 2>&1; then
+  render_html() {
+    html2text
+  }
+elif command -v lynx >/dev/null 2>&1; then
+  render_html() {
+    lynx -stdin -dump -nolist
+  }
+else
+  printf 'Missing dependency: html2text or lynx\n' >&2
+  exit 1
+fi
+
+boot_time="$(stat -c %Y /proc/1)"
+entries=''
+plain_entries=()
+
+escape_markup() {
+  sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+while read -r notification_data; do
+  appname="$(jq -r '.appname // "unknown"' <<<"$notification_data")"
+  [[ -n "$appname" ]] || appname="unknown"
+  html_text="$(jq -r '.html_text' <<<"$notification_data")"
+  timestamp="$(jq -r '.timestamp' <<<"$notification_data")"
+  rendered="$(render_html <<<"$html_text" | sed '/^[[:space:]]*$/d')"
+
+  if [[ -n "$rendered" ]]; then
+    converted_timestamp="$((boot_time + timestamp / 1000000))"
+    rendered_timestamp="$(date +"%b %-d, %I:%M %p" -d "@$converted_timestamp")"
+    single_line="$(tr '\n' ' ' <<<"$rendered" | sed 's/[[:space:]]\+/ /g; s/^ //; s/ $//')"
+    escaped_appname="$(escape_markup <<<"$appname")"
+    escaped_message="$(escape_markup <<<"$single_line")"
+    escaped_timestamp="$(escape_markup <<<"$rendered_timestamp")"
+
+    plain_entries+=("$rendered_timestamp  $appname  $single_line")
+    entries+="<b>$escaped_appname</b> <small>$escaped_timestamp</small>"$'\n'
+    entries+="$escaped_message"$'\003'
+  fi
+done < <(
+  dunstctl history |
+    jq -cr '.data | flatten(1) | .[] | {"appname": .appname.data, "html_text": .message.data, "timestamp": .timestamp.data}'
+)
+
+if [[ -z "${entries:-}" ]]; then
+  entries='No dunst history'
+fi
+
+rofi_theme='
+window {
+  width: 860px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 8px;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 14px 16px;
+  spacing: 12px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "filter notifications";
+}
+
+listview {
+  lines: 8;
+  columns: 1;
+  fixed-height: false;
+  cycle: true;
+  dynamic: true;
+  scrollbar: false;
+  spacing: 4px;
+  padding: 8px;
+}
+
+element {
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+
+message {
+  padding: 10px 16px;
+  border: 1px 0 0 0;
+}
+'
+
+selection_index=$(
+  rofi -dmenu -i -p "Dunst History" \
+    -markup-rows \
+    -sep $'\003' \
+    -eh 2 \
+    -no-custom \
+    -format i \
+    -mesg '<span size="small">Type to filter. Enter prints the selected notification.</span>' \
+    -theme-str "$rofi_theme" <<<"$entries"
+)
+
+[[ -z "${selection_index:-}" || "${#plain_entries[@]}" -eq 0 ]] && {
+  i3-msg mode default
+  exit 0
+}
+
+printf '%s\n' "${plain_entries[$selection_index]}"

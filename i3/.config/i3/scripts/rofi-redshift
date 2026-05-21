@@ -1,0 +1,105 @@
+#!/bin/bash
+set -euo pipefail
+
+profiles=(
+  'Normal|redshift -x|reset color temperature'
+  'Slightly Warm|redshift -O 5500|5500K'
+  'Warm|redshift -O 4500|4500K'
+  'Very Warm|redshift -O 3500|3500K'
+  'Candlelight|redshift -O 2500|2500K'
+)
+
+escape_markup() {
+  sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+entries=''
+for index in "${!profiles[@]}"; do
+  profile="${profiles[$index]}"
+  number="$((index + 1))"
+  title="${profile%%|*}"
+  rest="${profile#*|}"
+  command_name="${rest%%|*}"
+  subtitle="${rest##*|}"
+  escaped_title="$(escape_markup <<<"$title")"
+  escaped_subtitle="$(escape_markup <<<"$subtitle")"
+  escaped_command="$(escape_markup <<<"$command_name")"
+
+  entries+="$number  <b>$escaped_title</b>"$'\n'
+  entries+="   <small>$escaped_subtitle · $escaped_command</small>"$'\003'
+done
+
+rofi_theme='
+window {
+  width: 500px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 0;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 10px 12px;
+  spacing: 10px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "type an index or filter temperatures";
+}
+
+listview {
+  lines: 5;
+  columns: 1;
+  fixed-height: true;
+  cycle: true;
+  dynamic: true;
+  scrollbar: false;
+  spacing: 2px;
+  padding: 6px;
+}
+
+element {
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+'
+
+selection_index=$(
+  rofi -dmenu -i -p 'Color Temperature' \
+    -markup-rows \
+    -sep $'\003' \
+    -eh 2 \
+    -no-custom \
+    -format i \
+    -theme-str "$rofi_theme" <<<"$entries"
+)
+
+[ -z "${selection_index:-}" ] && exit 0
+
+case "$selection_index" in
+  0) redshift -x ;;
+  1) redshift -O 5500 ;;
+  2) redshift -O 4500 ;;
+  3) redshift -O 3500 ;;
+  4) redshift -O 2500 ;;
+  *) exit 1 ;;
+esac

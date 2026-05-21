@@ -1,0 +1,15 @@
+#!/bin/bash
+num="$1"
+
+focused_output=$(
+  i3-msg -t get_tree |
+  jq -r '.. | objects | select(.focused? == true) | .output // empty'
+)
+
+case "$focused_output" in
+    HDMI-1) prefix="L" ;;
+    DP-3)   prefix="R" ;;
+    *)      prefix="L" ;;
+esac
+
+i3-msg "workspace ${prefix}${num}"

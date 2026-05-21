@@ -1,0 +1,104 @@
+#!/bin/bash
+set -euo pipefail
+
+actions=(
+  'Lock|slock'
+  'Restart i3|i3-msg restart'
+  'Reload i3|i3-msg reload'
+  'Exit i3|i3-msg exit'
+)
+
+escape_markup() {
+  sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+entries=''
+for index in "${!actions[@]}"; do
+  action="${actions[$index]}"
+  number="$((index + 1))"
+  title="${action%%|*}"
+  subtitle="${action##*|}"
+  escaped_title="$(escape_markup <<<"$title")"
+  escaped_subtitle="$(escape_markup <<<"$subtitle")"
+
+  entries+="$number  <b>$escaped_title</b>"$'\n'
+  entries+="   <small>$escaped_subtitle</small>"$'\003'
+done
+
+rofi_theme='
+window {
+  width: 500px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 0;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 10px 12px;
+  spacing: 10px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "type an index or filter actions";
+}
+
+listview {
+  lines: 4;
+  columns: 1;
+  fixed-height: true;
+  cycle: true;
+  dynamic: true;
+  scrollbar: false;
+  spacing: 2px;
+  padding: 6px;
+}
+
+element {
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+'
+
+selection_index=$(
+  rofi -dmenu -i -p 'System' \
+    -markup-rows \
+    -sep $'\003' \
+    -eh 2 \
+    -no-custom \
+    -format i \
+    -theme-str "$rofi_theme" <<<"$entries"
+)
+
+[ -z "${selection_index:-}" ] && exit 0
+
+case "$selection_index" in
+  0) slock ;;
+  1) i3-msg restart ;;
+  2) i3-msg reload ;;
+  3)
+    i3-nagbar -t warning \
+      -m 'Do you really want to exit i3? This will end your X session.' \
+      -B 'Yes, exit i3' 'i3-msg exit'
+    ;;
+  *) exit 1 ;;
+esac

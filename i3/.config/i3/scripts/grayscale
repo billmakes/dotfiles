@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+STATE="$HOME/.cache/grayscale-enabled"
+mkdir -p "$(dirname "$STATE")"
+
+OUTPUTS=$(xrandr --query | awk '/ connected/{print $1}')
+
+apply_grayscale() {
+    for output in $OUTPUTS; do
+        xrandr --output "$output" --set CTM \
+            "0.299,0.587,0.114,0.299,0.587,0.114,0.299,0.587,0.114"
+    done
+}
+
+apply_normal() {
+    for output in $OUTPUTS; do
+        xrandr --output "$output" --set CTM \
+            "1,0,0,0,1,0,0,0,1"
+    done
+}
+
+if [ -f "$STATE" ]; then
+    apply_normal
+    rm -f "$STATE"
+else
+    apply_grayscale
+    touch "$STATE"
+fi

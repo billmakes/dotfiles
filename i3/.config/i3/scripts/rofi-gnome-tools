@@ -1,0 +1,107 @@
+#!/bin/bash
+set -euo pipefail
+
+tools=(
+  'Disk Usage Analyzer|baobab'
+  'Calculator|gnome-calculator'
+  'Calendar|gnome-calendar'
+  'Characters|gnome-characters'
+  'Clocks|gnome-clocks'
+  'System Monitor|gnome-system-monitor'
+  'Weather|gnome-weather'
+)
+
+escape_markup() {
+  sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+entries=''
+for index in "${!tools[@]}"; do
+  tool="${tools[$index]}"
+  number="$((index + 1))"
+  title="${tool%%|*}"
+  command_name="${tool##*|}"
+  escaped_title="$(escape_markup <<<"$title")"
+  escaped_command="$(escape_markup <<<"$command_name")"
+
+  entries+="$number  <b>$escaped_title</b>"$'\n'
+  entries+="   <small>$escaped_command</small>"$'\003'
+done
+
+rofi_theme='
+window {
+  width: 500px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 0;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 10px 12px;
+  spacing: 10px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "type an index or filter tools";
+}
+
+listview {
+  lines: 7;
+  columns: 1;
+  fixed-height: true;
+  cycle: true;
+  dynamic: true;
+  scrollbar: false;
+  spacing: 2px;
+  padding: 6px;
+}
+
+element {
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+'
+
+selection_index=$(
+  rofi -dmenu -i -p 'GNOME Tools' \
+    -markup-rows \
+    -sep $'\003' \
+    -eh 2 \
+    -no-custom \
+    -format i \
+    -theme-str "$rofi_theme" <<<"$entries"
+)
+
+[ -z "${selection_index:-}" ] && {
+  i3-msg mode default
+  exit 0
+}
+
+command_name="${tools[$selection_index]##*|}"
+
+if ! command -v "$command_name" >/dev/null 2>&1; then
+  rofi -e "Missing command: $command_name"
+  exit 1
+fi
+
+"$command_name" >/dev/null 2>&1 &

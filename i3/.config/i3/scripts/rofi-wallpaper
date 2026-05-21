@@ -1,0 +1,109 @@
+#!/bin/bash
+set -euo pipefail
+
+WALL_DIR="$HOME/walls"
+
+escape_markup() {
+  sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+mapfile -t wallpapers < <(
+  find "$WALL_DIR" -maxdepth 1 -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) |
+  sort
+)
+
+[ "${#wallpapers[@]}" -eq 0 ] && {
+  rofi -e "No wallpapers found in $WALL_DIR"
+  exit 1
+}
+
+print_entries() {
+  for index in "${!wallpapers[@]}"; do
+    file="${wallpapers[$index]}"
+    number="$((index + 1))"
+    filename="$(basename "$file")"
+    title="${filename%.*}"
+    title="${title//_/ }"
+    title="${title//-/ }"
+    escaped_title="$(escape_markup <<<"$title")"
+    escaped_filename="$(escape_markup <<<"$filename")"
+
+    printf '%s  <b>%s</b>\n   <small>%s</small>\0icon\x1f%s\003' \
+      "$number" "$escaped_title" "$escaped_filename" "$file"
+  done
+}
+
+rofi_theme='
+window {
+  width: 760px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 0;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 10px 12px;
+  spacing: 10px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "type an index or filter wallpapers";
+}
+
+listview {
+  lines: 6;
+  columns: 1;
+  fixed-height: true;
+  cycle: true;
+  dynamic: true;
+  scrollbar: false;
+  spacing: 4px;
+  padding: 8px;
+}
+
+element {
+  padding: 6px 8px;
+  spacing: 12px;
+  border-radius: 4px;
+}
+
+element-icon {
+  size: 112px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+'
+
+selection_index=$(
+  print_entries |
+  rofi -dmenu -i -show-icons -p 'Wallpaper' \
+    -markup-rows \
+    -sep $'\003' \
+    -eh 2 \
+    -no-custom \
+    -format i \
+    -theme-str "$rofi_theme"
+)
+
+[ -z "${selection_index:-}" ] && exit 0
+
+feh --bg-fill "${wallpapers[$selection_index]}"
