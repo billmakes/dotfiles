@@ -1,0 +1,34 @@
+# i3blocks configuration.
+
+separator_block_width=16
+markup=none
+
+[spotify]
+label=
+command=~/bin/spotify.py
+color=#81b71a
+interval=5
+
+[disk]
+label=DISK
+command=df -P / /mnt/storage | awk 'NR == 2 { root=$5 } NR == 3 { storage=$5 } END { printf "root %s • storage %s\n", root, storage }'
+interval=30
+
+[cpu]
+label=CPU
+command=/usr/share/i3blocks/cpu_usage
+interval=5
+
+[memory]
+label=MEM
+command=awk '/^MemTotal:/ { total=$2 } /^MemAvailable:/ { available=$2 } END { printf "%.1fG / %.1fG\n", (total-available)/1024/1024, available/1024/1024 }' /proc/meminfo
+interval=5
+
+[weather]
+label=WX
+command=~/.config/i3blocks/scripts/wttr
+interval=1800
+
+[time]
+command=date '+%m-%d-%Y %I:%M %p'
+interval=5

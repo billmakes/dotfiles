@@ -1,0 +1,30 @@
+#!/bin/sh
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/i3blocks"
+cache_file="$cache_dir/wttr"
+max_age=1800
+location="${WTTR_LOCATION:-}"
+
+mkdir -p "$cache_dir"
+
+if [ -r "$cache_file" ]; then
+    now="$(date +%s)"
+    modified="$(stat -c %Y "$cache_file" 2>/dev/null || echo 0)"
+    age=$((now - modified))
+
+    if [ "$age" -lt "$max_age" ]; then
+        cat "$cache_file"
+        exit 0
+    fi
+fi
+
+url="https://wttr.in/${location}?format=1"
+weather="$(curl -fsS --max-time 5 "$url" 2>/dev/null | tr -d '\n')"
+
+if [ -n "$weather" ]; then
+    printf '%s\n' "$weather" | tee "$cache_file"
+elif [ -r "$cache_file" ]; then
+    cat "$cache_file"
+else
+    printf 'weather unavailable\n'
+fi
