@@ -3,37 +3,23 @@ set -e
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
-sync_dir() {
-  name="$1"
-  src="$DOTFILES/$name/"
-  dest="$HOME/.config/$name"
+packages=(
+  i3
+  i3status
+  fish
+  alacritty
+  foot
+  tmux
+)
 
-  if [ ! -d "$src" ]; then
-    echo "Skipping $name: $src does not exist"
-    return
+for package in "${packages[@]}"; do
+  if [ ! -d "$DOTFILES/$package" ]; then
+    echo "Skipping $package: $DOTFILES/$package does not exist"
+    continue
   fi
 
-  if [ -L "$dest" ]; then
-    echo "Removing symlink: $dest"
-    rm "$dest"
-  fi
+  echo "Stowing $package"
+  stow --dir "$DOTFILES" --target "$HOME" --restow "$package"
+done
 
-  if [ -e "$dest" ] && [ ! -d "$dest" ]; then
-    echo "Skipping $name: $dest exists but is not a directory"
-    return
-  fi
-
-  mkdir -p "$dest"
-
-  echo "Syncing $src -> $dest/"
-  rsync -av --delete "$src" "$dest/"
-}
-
-sync_dir i3
-sync_dir i3status
-sync_dir fish
-sync_dir alacritty
-sync_dir rofi
-sync_dir tmux
-
-echo "Dotfiles synced to ~/.config"
+echo "Dotfiles stowed into $HOME"
