@@ -30,5 +30,5 @@ command=~/.config/i3blocks/scripts/wttr
 interval=1800
 
 [time]
-command=date '+%m-%d-%Y %I:%M %p'
+command=~/.config/i3blocks/scripts/time
 interval=5

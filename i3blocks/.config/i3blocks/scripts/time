@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+if [ -n "${BLOCK_BUTTON:-}" ]; then
+    gnome-calendar >/dev/null 2>&1 &
+fi
+
+date '+%m-%d-%Y %I:%M %p'

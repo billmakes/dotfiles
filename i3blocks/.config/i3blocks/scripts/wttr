@@ -7,6 +7,10 @@ location="${WTTR_LOCATION:-}"
 
 mkdir -p "$cache_dir"
 
+if [ -n "${BLOCK_BUTTON:-}" ]; then
+    gnome-weather >/dev/null 2>&1 &
+fi
+
 if [ -r "$cache_file" ]; then
     now="$(date +%s)"
     modified="$(stat -c %Y "$cache_file" 2>/dev/null || echo 0)"
