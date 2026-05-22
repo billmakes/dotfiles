@@ -1,0 +1,66 @@
+#!/bin/bash
+set -euo pipefail
+
+rofi_theme='
+window {
+  width: 760px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-radius: 0;
+  padding: 0;
+}
+
+mainbox {
+  spacing: 0;
+}
+
+inputbar {
+  padding: 10px 12px;
+  spacing: 10px;
+  border: 0 0 1px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  font: "Monospace Bold 10";
+}
+
+entry {
+  placeholder: "filter open windows";
+}
+
+listview {
+  lines: 8;
+  columns: 1;
+  fixed-height: true;
+  cycle: true;
+  dynamic: true;
+  scrollbar: true;
+  spacing: 2px;
+  padding: 6px;
+}
+
+element {
+  padding: 6px 8px;
+  spacing: 10px;
+  border-radius: 4px;
+}
+
+element-icon {
+  size: 28px;
+}
+
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+}
+'
+
+rofi -show window \
+  -markup \
+  -show-icons \
+  -window-format '<b>{t}</b>
+   <small>{w}  {c}</small>' \
+  -p 'Windows' \
+  -theme-str "$rofi_theme"

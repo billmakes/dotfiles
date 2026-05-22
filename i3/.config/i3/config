@@ -42,7 +42,7 @@ for_window [class="^(gnome-weather|org.gnome.Weather|org.gnome.Weather.Applicati
 bindsym $mod+Return exec --no-startup-id $term
 bindsym $mod+space exec --no-startup-id $menu
 bindsym $mod+d exec --no-startup-id $menu
-bindsym $mod+w exec --no-startup-id rofi -show window
+bindsym $mod+w exec --no-startup-id $scripts/rofi-windows
 bindsym $mod+g exec --no-startup-id $scripts/rofi-gnome-tools
 bindsym $mod+s exec --no-startup-id $scripts/rofi-tools
 bindsym $mod+x exec --no-startup-id $scripts/rofi-system
@@ -137,7 +137,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
 
-bindsym $mod+b exec --no-startup-id $scripts/grayscale
+bindsym $mod+b exec --no-startup-id librewolf
+bindsym $mod+n exec --no-startup-id $scripts/grayscale
 
 # X11 screenshot replacement for grim/slurp/wl-copy.
 bindsym Print exec --no-startup-id sh -c 'maim -s | xclip -selection clipboard -t image/png'
