@@ -105,6 +105,8 @@ bindsym $mod+Shift+5 exec --no-startup-id $scripts/mvws 5
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen toggle
 bindsym $mod+t floating toggle
+bindsym $mod+h split h
+bindsym $mod+v split v
 
 gaps outer 2
 gaps inner 7
