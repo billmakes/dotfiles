@@ -22,6 +22,8 @@ mapfile -t wallpapers < <(
 }
 
 print_entries() {
+  printf 'Random\n   <small>Pick a random wallpaper</small>\003'
+
   for index in "${!wallpapers[@]}"; do
     file="${wallpapers[$index]}"
     number="$((index + 1))"
@@ -106,4 +108,11 @@ selection_index=$(
 
 [ -z "${selection_index:-}" ] && exit 0
 
-feh --bg-fill "${wallpapers[$selection_index]}"
+if [ "$selection_index" -eq 0 ]; then
+  wallpaper="${wallpapers[$((RANDOM % ${#wallpapers[@]}))]}"
+else
+  wallpaper="${wallpapers[$((selection_index - 1))]}"
+fi
+
+feh --bg-fill "$wallpaper"
+notify-send "Wallpaper set" "$(basename "$wallpaper")"

@@ -156,3 +156,6 @@ exec --no-startup-id sh -c 'xset s 300 300; xset dpms 600 600 600'
 bar {
     status_command i3blocks
 }
+
+exec_always --no-startup-id sh -c 'pgrep -x kded6 >/dev/null || kded6'
+exec_always --no-startup-id sh -c 'sleep 3 && qdbus6 org.kde.kded6 /kded org.kde.kded6.loadModule wacomtablet'

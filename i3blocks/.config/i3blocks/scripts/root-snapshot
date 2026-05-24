@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+source="$(findmnt -no SOURCE / 2>/dev/null || true)"
+subvol="$(printf '%s\n' "$source" | sed -n 's/.*\[\(.*\)\]$/\1/p')"
+
+if [ -z "$subvol" ] || [ "$subvol" = "/@" ]; then
+    exit 0
+fi
+
+printf 'SNAPSHOT BOOT: %s\n\n#ff5555\n' "$subvol"

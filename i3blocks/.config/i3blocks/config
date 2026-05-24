@@ -3,6 +3,10 @@
 separator_block_width=16
 markup=none
 
+[root-snapshot]
+command=~/.config/i3blocks/scripts/root-snapshot
+interval=60
+
 [spotify]
 label=
 command=~/bin/spotify.py
