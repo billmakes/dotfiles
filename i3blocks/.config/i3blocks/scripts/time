@@ -5,4 +5,14 @@ if [ -n "${BLOCK_BUTTON:-}" ]; then
     gnome-calendar >/dev/null 2>&1 &
 fi
 
-date '+%m-%d-%Y %I:%M %p'
+case "${1:-datetime}" in
+    date)
+        date '+%m-%d-%Y'
+        ;;
+    clock)
+        date '+%I:%M %p'
+        ;;
+    *)
+        date '+%m-%d-%Y %I:%M %p'
+        ;;
+esac

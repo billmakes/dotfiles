@@ -154,6 +154,7 @@ exec --no-startup-id sh -c 'xset s 300 300; xset dpms 600 600 600'
 
 ### Bar
 bar {
+    font pango:JetBrainsMono Nerd Font Mono 10 
     status_command i3blocks
 }
 

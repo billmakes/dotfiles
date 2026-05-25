@@ -14,25 +14,31 @@ color=#81b71a
 interval=5
 
 [disk]
-label=DISK
+label=󰋊
 command=df -P / /mnt/storage | awk 'NR == 2 { root=$5 } NR == 3 { storage=$5 } END { printf "root %s • storage %s\n", root, storage }'
 interval=30
 
 [cpu]
-label=CPU
+label=
 command=/usr/share/i3blocks/cpu_usage
 interval=5
 
 [memory]
-label=MEM
+label=
 command=awk '/^MemTotal:/ { total=$2 } /^MemAvailable:/ { available=$2 } END { printf "%.1fG / %.1fG\n", (total-available)/1024/1024, available/1024/1024 }' /proc/meminfo
 interval=5
 
 [weather]
-label=WX
+label=
 command=~/.config/i3blocks/scripts/wttr
 interval=1800
 
+[date]
+label=
+command=~/.config/i3blocks/scripts/time date
+interval=60
+
 [time]
-command=~/.config/i3blocks/scripts/time
+label=
+command=~/.config/i3blocks/scripts/time clock
 interval=5

@@ -11,6 +11,7 @@ general {
         interval = 5
 }
 
+font = "JetBrainsMono Nerd Font 10" 
 order += "disk /"
 order += "load"
 order += "memory"

@@ -2,6 +2,9 @@
 TERM = "xterm-256color"
 COLORTERM = "truecolor"
 
+[terminal.shell]
+program = "/usr/bin/fish"
+
 [font]
 normal = { family ="JetBrainsMono Nerd Font Mono" }
 size = 10.0
