@@ -15,7 +15,7 @@ interval=5
 
 [disk]
 label=󰋊
-command=df -P / /mnt/storage | awk 'NR == 2 { root=$5 } NR == 3 { storage=$5 } END { printf "root %s • storage %s\n", root, storage }'
+command=~/.config/i3blocks/scripts/disk
 interval=30
 
 [cpu]
@@ -26,6 +26,10 @@ interval=5
 [memory]
 label=
 command=awk '/^MemTotal:/ { total=$2 } /^MemAvailable:/ { available=$2 } END { printf "%.1fG / %.1fG\n", (total-available)/1024/1024, available/1024/1024 }' /proc/meminfo
+interval=5
+
+[volume]
+command=~/.config/i3blocks/scripts/volume
 interval=5
 
 [weather]

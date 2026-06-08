@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -n "${BLOCK_BUTTON:-}" ]; then
+    baobab >/dev/null 2>&1 &
+fi
+
+df -P / /mnt/storage | awk 'NR == 2 { root=$5 } NR == 3 { storage=$5 } END { printf "root %s • storage %s\n", root, storage }'

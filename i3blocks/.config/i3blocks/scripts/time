@@ -2,7 +2,10 @@
 set -eu
 
 if [ -n "${BLOCK_BUTTON:-}" ]; then
-    gnome-calendar >/dev/null 2>&1 &
+    case "${1:-datetime}" in
+        # clock) gnome-clocks >/dev/null 2>&1 & ;;
+        *)     orage >/dev/null 2>&1 & ;;
+    esac
 fi
 
 case "${1:-datetime}" in

@@ -21,7 +21,6 @@ exec_always --no-startup-id sh -c '[ -x ~/.fehbg ] && ~/.fehbg'
 ### Session
 # Export the X11/i3 environment for dbus/systemd-launched services.
 exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP=i3 XDG_SESSION_DESKTOP=i3 XDG_SESSION_TYPE=x11
-exec --no-startup-id dex --autostart --environment i3
 
 ### Pointer and Window Defaults
 focus_follows_mouse no
@@ -146,7 +145,7 @@ bindsym $mod+n exec --no-startup-id $scripts/grayscale
 bindsym Print exec --no-startup-id sh -c 'maim -s | xclip -selection clipboard -t image/png'
 
 # Lock screen blanking and display sleep.
-exec --no-startup-id sh -c 'xset s 300 300; xset dpms 600 600 600'
+#exec --no-startup-id sh -c 'xset s 300 300; xset dpms 600 600 600'
 
 ### Clipboard
 # Wayland clipboard tooling from the Sway config does not apply here.
@@ -158,5 +157,7 @@ bar {
     status_command i3blocks
 }
 
-exec_always --no-startup-id sh -c 'pgrep -x kded6 >/dev/null || kded6'
-exec_always --no-startup-id sh -c 'sleep 3 && qdbus6 org.kde.kded6 /kded org.kde.kded6.loadModule wacomtablet'
+#exec_always --no-startup-id sh -c 'pgrep -x kded6 >/dev/null || kded6'
+#exec_always --no-startup-id sh -c 'sleep 3 && qdbus6 org.kde.kded6 /kded org.kde.kded6.loadModule wacomtablet'
+exec_always --no-startup-id sh -c 'openrc --user desktop'
+exec_always --no-startup-id picom

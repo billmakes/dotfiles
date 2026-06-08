@@ -1,7 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export DOTNET_ROOT:/home/bill/\x2edotnet
-SETUVAR --export EDITOR:/home/bill/.local/share/bob/nvim-bin/nvim
+SETUVAR --export EDITOR:/home/bill/\x2elocal/share/bob/nvim\x2dbin/nvim
+SETUVAR --export HF_HOME:/mnt/storage/ai\x2dcache
+SETUVAR --export HF_HUB_CACHE:/mnt/storage/ai\x2dcache/hub
+SETUVAR --export OPENAI_API_KEY:dummy
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:4D5566
 SETUVAR fish_color_cancel:\x2d\x2dreverse
