@@ -1,0 +1,301 @@
+# tint2 — left monitor (HDMI-A-0), workspaces L1-L5
+
+#-------------------------------------
+# Backgrounds
+#-------------------------------------
+
+# 1: transparent
+rounded = 0
+border_width = 0
+border_color = #000000 0
+background_color = #000000 0
+
+# 2: panel
+rounded = 0
+border_width = 0
+border_color = #000000 0
+background_color = #000000 100
+
+# 3: snapshot
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #bd3232 100
+background_color = #8b0000 100
+
+# 4: spotify
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #4e5a65 100
+background_color = #1c2833 100
+
+# 5: disk
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #aa7444 100
+background_color = #784212 100
+
+# 6: cpu
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #4c55b0 100
+background_color = #1a237e 100
+
+# 7: memory
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #7c558c 100
+background_color = #4a235a 100
+
+# 8: volume
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #3232dc 100
+background_color = #0000aa 100
+
+# 9: weather
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #4d9052 100
+background_color = #1b5e20 100
+
+# 10: date
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #ad6a32 100
+background_color = #7b3800 100
+
+# 11: time/clock
+rounded = 0
+border_width = 2
+border_sides = TL
+border_color = #329296 100
+background_color = #006064 100
+
+#-------------------------------------
+# Panel — left monitor
+#-------------------------------------
+panel_items = E1E2E3E4E5E6E7E8E9E10E11E12E13C
+panel_size = 100% 24
+panel_margin = 0 0
+panel_padding = 0 2 2
+panel_dock = 0
+panel_layer = bottom
+panel_position = bottom left horizontal
+panel_monitor = 2
+wm_menu = 0
+panel_background_id = 2
+panel_shrink = 0
+
+#-------------------------------------
+# Systray (disabled on left)
+#-------------------------------------
+systray_padding = 0 0 0
+systray_background_id = 1
+systray_monitor = primary
+
+#-------------------------------------
+# Clock (time)
+#-------------------------------------
+time1_format = %I:%M %p
+time1_font = JetBrainsMono Nerd Font Mono 10
+time2_format =
+clock_font_color = #ffffff 100
+clock_padding = 6 2
+clock_background_id = 11
+clock_lclick_command =
+clock_rclick_command =
+
+#-------------------------------------
+# Executors 1-5: workspace buttons L1-L5
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L1
+execp_interval = 2
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 0
+execp_background_id = 1
+execp_centered = 1
+execp_lclick_command = i3-msg workspace L1
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L2
+execp_interval = 2
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 0
+execp_background_id = 1
+execp_centered = 1
+execp_lclick_command = i3-msg workspace L2
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L3
+execp_interval = 2
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 0
+execp_background_id = 1
+execp_centered = 1
+execp_lclick_command = i3-msg workspace L3
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L4
+execp_interval = 2
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 0
+execp_background_id = 1
+execp_centered = 1
+execp_lclick_command = i3-msg workspace L4
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L5
+execp_interval = 2
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 0
+execp_background_id = 1
+execp_centered = 1
+execp_lclick_command = i3-msg workspace L5
+
+#-------------------------------------
+# Executor 6 — BTRFS snapshot indicator
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/snapshot.sh
+execp_interval = 60
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 3
+execp_centered = 1
+
+#-------------------------------------
+# Executor 7 — Spotify now playing
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/spotify.sh
+execp_interval = 5
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #81b71a 100
+execp_padding = 4 2
+execp_background_id = 4
+execp_centered = 1
+
+#-------------------------------------
+# Executor 8 — Disk usage
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/disk.sh
+execp_interval = 30
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 5
+execp_centered = 1
+
+#-------------------------------------
+# Executor 9 — CPU usage
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/cpu.sh
+execp_interval = 5
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 6
+execp_centered = 1
+
+#-------------------------------------
+# Executor 10 — Memory usage
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/memory.sh
+execp_interval = 5
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 7
+execp_centered = 1
+
+#-------------------------------------
+# Executor 11 — Volume
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/volume.sh
+execp_interval = 5
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 8
+execp_centered = 1
+execp_lclick_command = pactl set-sink-mute @DEFAULT_SINK@ toggle
+execp_rclick_command = pavucontrol &
+execp_uwheel_command = pactl set-sink-volume @DEFAULT_SINK@ +5%
+execp_dwheel_command = pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+#-------------------------------------
+# Executor 12 — Weather
+#-------------------------------------
+execp = new
+execp_command = ~/.config/i3blocks/scripts/wttr
+execp_interval = 1800
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 9
+execp_centered = 1
+
+#-------------------------------------
+# Executor 13 — Date
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/date.sh
+execp_interval = 60
+execp_has_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_font_color = #ffffff 100
+execp_padding = 4 2
+execp_background_id = 10
+execp_centered = 1
