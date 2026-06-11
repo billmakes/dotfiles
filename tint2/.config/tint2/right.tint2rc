@@ -82,7 +82,7 @@ background_color = #006064 100
 #-------------------------------------
 # Panel — left monitor
 #-------------------------------------
-panel_items = E1E2E3E4E5E6E7E8E9E10E11E12E13CS
+panel_items = E1E2E3E4E5E6E7E8E9E10E11SC
 panel_size = 100% 24
 panel_margin = 0 0
 panel_padding = 0 2 2
@@ -222,37 +222,7 @@ execp_background_id = 5
 execp_centered = 1
 
 #-------------------------------------
-# Executor 9 — CPU usage
-#-------------------------------------
-execp = new
-execp_command = ~/.config/tint2/scripts/cpu.sh
-execp_interval = 5
-execp_has_icon = 0
-execp_continuous = 0
-execp_markup = 0
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_font_color = #ffffff 100
-execp_padding = 4 2
-execp_background_id = 6
-execp_centered = 1
-
-#-------------------------------------
-# Executor 10 — Memory usage
-#-------------------------------------
-execp = new
-execp_command = ~/.config/tint2/scripts/memory.sh
-execp_interval = 5
-execp_has_icon = 0
-execp_continuous = 0
-execp_markup = 0
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_font_color = #ffffff 100
-execp_padding = 4 2
-execp_background_id = 7
-execp_centered = 1
-
-#-------------------------------------
-# Executor 11 — Volume
+# Executor 9 — Volume
 #-------------------------------------
 execp = new
 execp_command = ~/.config/tint2/scripts/volume.sh

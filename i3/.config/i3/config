@@ -11,8 +11,8 @@ font pango:monospace 8
 
 ### Displays
 # Keep output names here so workspace placement and xrandr stay in sync.
-set $mon_left HDMI-A-0
-set $mon_right DisplayPort-2
+set $mon_left DisplayPort-2
+set $mon_right HDMI-A-0
 
 # Left monitor: 120 Hz. Right monitor: primary 239.76 Hz.
 exec_always --no-startup-id xrandr --output $mon_left --mode 1920x1080 --rate 120 --pos 0x0 --output $mon_right --primary --mode 1920x1080 --rate 239.76 --pos 1920x0
@@ -36,6 +36,9 @@ for_window [class="^(gnome-characters|org.gnome.Characters)$"] floating enable
 for_window [class="^(gnome-clocks|org.gnome.clocks|org.gnome.Clocks)$"] floating enable, resize set 520 640, move position center
 for_window [class="^(gnome-system-monitor|org.gnome.SystemMonitor)$"] floating enable
 for_window [class="^(gnome-weather|org.gnome.Weather|org.gnome.Weather.Application)$"] floating enable
+
+# KDE
+for_window [class="plasmashell" title="^Desktop @"] floating enable, border none, sticky enable
 
 ### Launchers and Session Actions
 bindsym $mod+Return exec --no-startup-id $term
@@ -128,12 +131,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ### Media and Utilities
-set $refresh_i3blocks pkill -RTMIN+10 i3blocks
-
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3blocks
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3blocks
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
@@ -152,12 +153,10 @@ bindsym Print exec --no-startup-id sh -c 'maim -s | xclip -selection clipboard -
 # Add an X11 backend such as clipmenu or greenclip before binding clipboard history.
 
 ### Bar
-bar {
-    font pango:JetBrainsMono Nerd Font Mono 10 
-    status_command i3blocks
-}
+exec_always --no-startup-id ~/.config/tint2/launch.sh
 
-#exec_always --no-startup-id sh -c 'pgrep -x kded6 >/dev/null || kded6'
-#exec_always --no-startup-id sh -c 'sleep 3 && qdbus6 org.kde.kded6 /kded org.kde.kded6.loadModule wacomtablet'
-exec_always --no-startup-id sh -c 'openrc --user desktop'
+## Picom
 exec_always --no-startup-id picom
+
+## Services
+#exec_always --no-startup-id ~/bin/openrc-user-services

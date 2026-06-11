@@ -12,9 +12,10 @@ background_color = #000000 0
 
 # 2: panel
 rounded = 0
-border_width = 0
-border_color = #000000 0
-background_color = #000000 100
+border_width = 2
+border_sides = TB
+border_color = #555555 100
+background_color = #111111 100
 
 # 3: snapshot
 rounded = 0
@@ -89,7 +90,7 @@ background_color = #37474f 100
 #-------------------------------------
 # Panel
 #-------------------------------------
-panel_items = E1E2E3E4E5E6E7E8E9CS
+panel_items = E1E2E3E4E5E6E7SC
 panel_size = 1% 24
 panel_margin = 0 0
 panel_padding = 0 2 2
@@ -185,37 +186,7 @@ execp_background_id = 12
 execp_centered = 1
 
 #-------------------------------------
-# Executor 4 — CPU usage
-#-------------------------------------
-execp = new
-execp_command = ~/.config/tint2/scripts/cpu.sh
-execp_interval = 5
-execp_has_icon = 0
-execp_continuous = 0
-execp_markup = 0
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_font_color = #ffffff 100
-execp_padding = 4 2
-execp_background_id = 6
-execp_centered = 1
-
-#-------------------------------------
-# Executor 5 — Memory usage
-#-------------------------------------
-execp = new
-execp_command = ~/.config/tint2/scripts/memory.sh
-execp_interval = 5
-execp_has_icon = 0
-execp_continuous = 0
-execp_markup = 0
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_font_color = #ffffff 100
-execp_padding = 4 2
-execp_background_id = 7
-execp_centered = 1
-
-#-------------------------------------
-# Executor 6 — Volume
+# Executor 5 — Volume
 #-------------------------------------
 execp = new
 execp_command = ~/.config/tint2/scripts/volume.sh

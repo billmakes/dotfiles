@@ -11,11 +11,7 @@ VOL=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | grep -oP '\d+(?=%)' | h
 MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')
 
 if [ "$MUTE" = "yes" ] || [ -z "$VOL" ]; then
-    echo "󰝟 mute"
-elif [ "$VOL" -ge 60 ]; then
-    echo "󰕾 ${VOL}%"
-elif [ "$VOL" -ge 20 ]; then
-    echo "󰖀 ${VOL}%"
+    echo "[VOL] MUTE"
 else
-    echo "󰕿 ${VOL}%"
+    echo "[VOL] ${VOL}%"
 fi

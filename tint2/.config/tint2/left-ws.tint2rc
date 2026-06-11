@@ -1,5 +1,5 @@
 # Left-anchored panel: workspace buttons only, shrinks to content width.
-# Monitor 0 = HDMI-A-0 (left), Monitor 1 = DisplayPort-2 (right).
+# Monitor 1 = DisplayPort-2 (left), Monitor 2 = HDMI-A-0 (right).
 
 #-------------------------------------
 # Backgrounds
@@ -33,75 +33,7 @@ panel_background_id = 2
 panel_shrink = 1
 
 #-------------------------------------
-# Executors 1-5: L workspaces on HDMI-A-0 (execp_monitor = 1)
-#-------------------------------------
-execp = new
-execp_command = ~/.config/tint2/scripts/workspace.sh L1
-execp_interval = 0
-execp_continuous = 1
-execp_has_icon = 0
-execp_markup = 1
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_padding = 0 2
-execp_background_id = 1
-execp_centered = 1
-execp_monitor = 1
-execp_lclick_command = i3-msg workspace L1
-
-execp = new
-execp_command = ~/.config/tint2/scripts/workspace.sh L2
-execp_interval = 0
-execp_continuous = 1
-execp_has_icon = 0
-execp_markup = 1
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_padding = 0 2
-execp_background_id = 1
-execp_centered = 1
-execp_monitor = 1
-execp_lclick_command = i3-msg workspace L2
-
-execp = new
-execp_command = ~/.config/tint2/scripts/workspace.sh L3
-execp_interval = 0
-execp_continuous = 1
-execp_has_icon = 0
-execp_markup = 1
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_padding = 0 2
-execp_background_id = 1
-execp_centered = 1
-execp_monitor = 1
-execp_lclick_command = i3-msg workspace L3
-
-execp = new
-execp_command = ~/.config/tint2/scripts/workspace.sh L4
-execp_interval = 0
-execp_continuous = 1
-execp_has_icon = 0
-execp_markup = 1
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_padding = 0 2
-execp_background_id = 1
-execp_centered = 1
-execp_monitor = 1
-execp_lclick_command = i3-msg workspace L4
-
-execp = new
-execp_command = ~/.config/tint2/scripts/workspace.sh L5
-execp_interval = 0
-execp_continuous = 1
-execp_has_icon = 0
-execp_markup = 1
-execp_font = JetBrainsMono Nerd Font Mono 10
-execp_padding = 0 2
-execp_background_id = 1
-execp_centered = 1
-execp_monitor = 1
-execp_lclick_command = i3-msg workspace L5
-
-#-------------------------------------
-# Executors 6-10: R workspaces on DisplayPort-2 (execp_monitor = 2)
+# Executors 1-5: R workspaces on HDMI-A-0 (execp_monitor = 2)
 #-------------------------------------
 execp = new
 execp_command = ~/.config/tint2/scripts/workspace.sh R1
@@ -167,3 +99,71 @@ execp_background_id = 1
 execp_centered = 1
 execp_monitor = 2
 execp_lclick_command = i3-msg workspace R5
+
+#-------------------------------------
+# Executors 6-10: L workspaces on DisplayPort-2 (execp_monitor = 1)
+#-------------------------------------
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L1
+execp_interval = 0
+execp_continuous = 1
+execp_has_icon = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 2
+execp_background_id = 1
+execp_centered = 1
+execp_monitor = 1
+execp_lclick_command = i3-msg workspace L1
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L2
+execp_interval = 0
+execp_continuous = 1
+execp_has_icon = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 2
+execp_background_id = 1
+execp_centered = 1
+execp_monitor = 1
+execp_lclick_command = i3-msg workspace L2
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L3
+execp_interval = 0
+execp_continuous = 1
+execp_has_icon = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 2
+execp_background_id = 1
+execp_centered = 1
+execp_monitor = 1
+execp_lclick_command = i3-msg workspace L3
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L4
+execp_interval = 0
+execp_continuous = 1
+execp_has_icon = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 2
+execp_background_id = 1
+execp_centered = 1
+execp_monitor = 1
+execp_lclick_command = i3-msg workspace L4
+
+execp = new
+execp_command = ~/.config/tint2/scripts/workspace.sh L5
+execp_interval = 0
+execp_continuous = 1
+execp_has_icon = 0
+execp_markup = 1
+execp_font = JetBrainsMono Nerd Font Mono 10
+execp_padding = 0 2
+execp_background_id = 1
+execp_centered = 1
+execp_monitor = 1
+execp_lclick_command = i3-msg workspace L5

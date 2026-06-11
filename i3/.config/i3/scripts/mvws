@@ -17,9 +17,9 @@ case "$focused_workspace" in
 esac
 
 case "${prefix:-}:$focused_output" in
-    :HDMI-1|:HDMI-A-0)       prefix="L" ;;
-    :DP-3|:DisplayPort-2)    prefix="R" ;;
-    :*)                      prefix="L" ;;
+    :HDMI-1|:HDMI-A-0)       prefix="R" ;;
+    :DP-3|:DisplayPort-2)    prefix="L" ;;
+    :*)                      prefix="R" ;;
 esac
 
 i3-msg "move container to workspace ${prefix}${num}; workspace ${prefix}${num}"
