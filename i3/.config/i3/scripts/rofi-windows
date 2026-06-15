@@ -6,24 +6,6 @@ window {
   width: 760px;
   location: center;
   anchor: center;
-  border: 1px;
-  border-radius: 0;
-  padding: 0;
-}
-
-mainbox {
-  spacing: 0;
-}
-
-inputbar {
-  padding: 10px 12px;
-  spacing: 10px;
-  border: 0 0 1px 0;
-  children: [ prompt, entry ];
-}
-
-prompt {
-  font: "Monospace Bold 10";
 }
 
 entry {
@@ -37,22 +19,19 @@ listview {
   cycle: true;
   dynamic: true;
   scrollbar: true;
-  spacing: 2px;
-  padding: 6px;
+  spacing: 0;
+  padding: 2px;
 }
 
 element {
-  padding: 6px 8px;
-  spacing: 10px;
-  border-radius: 4px;
+  spacing: 8px;
 }
 
 element-icon {
-  size: 28px;
+  size: 18px;
 }
 
 element-text {
-  text-color: inherit;
   vertical-align: 0.5;
 }
 '
@@ -60,7 +39,6 @@ element-text {
 rofi -show window \
   -markup \
   -show-icons \
-  -window-format '<b>{t}</b>
-   <small>{w}  {c}</small>' \
+  -window-format '<b>{t}</b>	<small><i>({w}  {c})</i></small>' \
   -p 'Windows' \
   -theme-str "$rofi_theme"

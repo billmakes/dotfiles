@@ -1,14 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 
-script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
 tools=(
-  'Wallpapers|rofi-wallpaper'
-  'Clipboard|greenclip print'
-  'Screen Temperature|rofi-redshift'
-  'Notifications|rofi-dunst-history'
-  'Accent Color|rofi-accent'
+  'File Manager|thunar'
+  'Calculator|galculator'
+  'Calendar|orage'
+  'Characters|gucharmap'
+  'Clocks|orage'
+  'System Monitor|xfce4-taskmanager'
+  'Screenshot|xfce4-screenshooter'
 )
 
 escape_markup() {
@@ -23,11 +23,11 @@ for index in "${!tools[@]}"; do
   tool="${tools[$index]}"
   number="$((index + 1))"
   title="${tool%%|*}"
-  subtitle="${tool##*|}"
+  command_name="${tool##*|}"
   escaped_title="$(escape_markup <<<"$title")"
-  escaped_subtitle="$(escape_markup <<<"$subtitle")"
+  escaped_command="$(escape_markup <<<"$command_name")"
 
-  entries+="$number  <b>$escaped_title</b>	<small><i>($escaped_subtitle)</i></small>"$'\003'
+  entries+="$number  <b>$escaped_title</b>	<small><i>($escaped_command)</i></small>"$'\003'
 done
 
 rofi_theme='
@@ -42,7 +42,7 @@ entry {
 }
 
 listview {
-  lines: 5;
+  lines: 7;
   columns: 1;
   fixed-height: true;
   cycle: true;
@@ -62,7 +62,7 @@ element-text {
 '
 
 selection_index=$(
-  rofi -dmenu -i -p 'Tools' \
+  rofi -dmenu -i -p 'XFCE Tools' \
     -markup-rows \
     -sep $'\003' \
     -eh 1 \
@@ -71,13 +71,16 @@ selection_index=$(
     -theme-str "$rofi_theme" <<<"$entries"
 )
 
-[ -z "${selection_index:-}" ] && exit 0
+[ -z "${selection_index:-}" ] && {
+  i3-msg mode default
+  exit 0
+}
 
-case "$selection_index" in
-  0) "$script_dir/rofi-wallpaper" ;;
-  1) rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}' ;;
-  2) "$script_dir/rofi-redshift" ;;
-  3) "$script_dir/rofi-dunst-history" ;;
-  4) "$script_dir/rofi-accent" ;;
-  *) exit 1 ;;
-esac
+command_name="${tools[$selection_index]##*|}"
+
+if ! command -v "$command_name" >/dev/null 2>&1; then
+  rofi -e "Missing command: $command_name"
+  exit 1
+fi
+
+"$command_name" >/dev/null 2>&1 &

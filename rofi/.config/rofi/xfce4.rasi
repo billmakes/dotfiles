@@ -1,0 +1,219 @@
+/*
+ * Light tint2-style rofi theme using the XFCE/GTK bevel palette.
+ * Raised: top/left #ffffff, bottom/right #404040.
+ * Sunken: dark top/left with white content edge.
+ */
+
+* {
+  bg-color:                  #c0c0c0;
+  base-color:                #ffffff;
+  fg-color:                  #000000;
+  text-color:                #000000;
+  selected-bg-color:         #d4d0c8;
+  selected-fg-color:         #000000;
+  border-color:              #808080;
+  bevel-light-color:         #ffffff;
+  bevel-dark-color:          #404040;
+  selected-bevel-light-color: #ffffff;
+  selected-bevel-dark-color:  #404040;
+  inactive-fg-color:         #808080;
+  urgent-bg-color:           #ffcccc;
+  urgent-border-color:       #800000;
+
+  background-color: transparent;
+  text-color:       @fg-color;
+  font:             "Luxi Sans Regular 9";
+}
+
+window {
+  background-color: @bg-color;
+  text-color:       @text-color;
+  border:           2px 0 0 2px;
+  border-color:     @bevel-light-color;
+  border-radius:    0;
+  padding:          0;
+  orientation:      vertical;
+  children:         [ bevel-middle, bevel-bottom ];
+}
+
+bevel-middle {
+  background-color: @bevel-dark-color;
+  orientation:      horizontal;
+  children:         [ bevel-left, mainbox, bevel-right ];
+}
+
+bevel-left {
+  background-color: @bevel-light-color;
+  expand:           false;
+  width:            2px;
+}
+
+bevel-right {
+  background-color: @bevel-dark-color;
+  expand:           false;
+  width:            2px;
+}
+
+bevel-bottom {
+  background-color: @bevel-dark-color;
+  expand:           false;
+  height:           2px;
+}
+
+mainbox {
+  background-color: @bg-color;
+  border:           0;
+  spacing:          0;
+}
+
+inputbar {
+  background-color: @bg-color;
+  text-color:       @text-color;
+  border:           0 0 2px 0;
+  border-color:     @bevel-dark-color;
+  padding:          3px 5px;
+  spacing:          4px;
+  children:         [ prompt-frame, entry, case-frame ];
+}
+
+prompt-frame {
+  background-color: @bevel-dark-color;
+  border:           2px 0 0 2px;
+  border-color:     @bevel-light-color;
+  expand:           false;
+  padding:          0 2px 2px 0;
+  children:         [ prompt ];
+}
+
+prompt {
+  background-color: @bg-color;
+  text-color:       @text-color;
+  border:           0;
+  border-radius:    0;
+  padding:          2px 5px 1px 4px;
+}
+
+entry {
+  background-color: @base-color;
+  text-color:       @text-color;
+  placeholder-color: @inactive-fg-color;
+  border:           2px 0 0 2px;
+  border-color:     @bevel-dark-color;
+  border-radius:    0;
+  expand:           true;
+  padding:          2px 5px;
+}
+
+case-frame {
+  background-color: @bevel-dark-color;
+  border:           2px 0 0 2px;
+  border-color:     @bevel-light-color;
+  expand:           false;
+  padding:          0 2px 2px 0;
+  children:         [ case-indicator ];
+}
+
+case-indicator {
+  background-color: @bg-color;
+  text-color:       @inactive-fg-color;
+  border:           0;
+  border-radius:    0;
+  padding:          2px 4px;
+}
+
+listview {
+  background-color: @bg-color;
+  text-color:       @fg-color;
+  border:           2px 0 0 0;
+  border-color:     @bevel-dark-color;
+  padding:          2px;
+}
+
+element {
+  background-color: @bg-color;
+  text-color:       @fg-color;
+  border:           0;
+  padding:          3px 6px;
+}
+
+element normal.normal,
+element alternate.normal {
+  background-color: @bg-color;
+  text-color:       @fg-color;
+}
+
+element selected.normal,
+element selected.active,
+element selected.urgent {
+  background-color: @selected-bg-color;
+  text-color:       @selected-fg-color;
+  border:           2px 0 0 2px;
+  border-color:     @selected-bevel-dark-color;
+  border-radius:    0;
+  padding:          2px 6px 1px 5px;
+}
+
+element selected.normal element-text,
+element selected.active element-text,
+element selected.urgent element-text,
+element selected.normal element-icon,
+element selected.active element-icon,
+element selected.urgent element-icon {
+  background-color: transparent;
+  text-color:       @selected-fg-color;
+  border:           0 0 2px 0;
+  border-color:     @selected-bevel-light-color;
+}
+
+element normal.active,
+element alternate.active {
+  background-color: @base-color;
+  text-color:       @text-color;
+}
+
+element normal.urgent,
+element alternate.urgent {
+  background-color: @urgent-bg-color;
+  text-color:       @text-color;
+  border:           0 0 0 2px;
+  border-color:     @urgent-border-color;
+}
+
+element-icon {
+  background-color: transparent;
+  text-color:       inherit;
+}
+
+element-text {
+  background-color: transparent;
+  text-color:       inherit;
+}
+
+scrollbar {
+  background-color: @base-color;
+  handle-color:     @border-color;
+  border:           0;
+}
+
+message {
+  background-color: @base-color;
+  text-color:       @fg-color;
+  border:           2px;
+  border-color:     @bevel-dark-color;
+  border-radius:    0;
+  padding:          4px;
+}
+
+textbox {
+  background-color: transparent;
+  text-color:       @fg-color;
+}
+
+error-message {
+  background-color: @urgent-bg-color;
+  text-color:       @text-color;
+  border:           2px;
+  border-color:     @urgent-border-color;
+  border-radius:    0;
+  padding:          8px;
+}

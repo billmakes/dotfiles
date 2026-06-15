@@ -1,0 +1,8 @@
+configuration {
+  font: "Luxi Sans Regular 9";
+  icon-theme: "Chicago95";
+  show-icons: true;
+  matching: "fuzzy";
+}
+
+@theme "xfce4"

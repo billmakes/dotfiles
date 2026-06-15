@@ -48,8 +48,7 @@ while read -r notification_data; do
     escaped_timestamp="$(escape_markup <<<"$rendered_timestamp")"
 
     plain_entries+=("$rendered_timestamp  $appname  $single_line")
-    entries+="<b>$escaped_appname</b> <small>$escaped_timestamp</small>"$'\n'
-    entries+="$escaped_message"$'\003'
+    entries+="<b>$escaped_appname</b>	<small><i>($escaped_timestamp)</i></small>  $escaped_message"$'\003'
   fi
 done < <(
   dunstctl history |
@@ -65,24 +64,6 @@ window {
   width: 860px;
   location: center;
   anchor: center;
-  border: 1px;
-  border-radius: 8px;
-  padding: 0;
-}
-
-mainbox {
-  spacing: 0;
-}
-
-inputbar {
-  padding: 14px 16px;
-  spacing: 12px;
-  border: 0 0 1px 0;
-  children: [ prompt, entry ];
-}
-
-prompt {
-  font: "Monospace Bold 10";
 }
 
 entry {
@@ -92,26 +73,24 @@ entry {
 listview {
   lines: 8;
   columns: 1;
-  fixed-height: false;
+  fixed-height: true;
   cycle: true;
   dynamic: true;
   scrollbar: false;
-  spacing: 4px;
-  padding: 8px;
+  spacing: 0;
+  padding: 2px;
 }
 
 element {
-  padding: 10px 12px;
-  border-radius: 6px;
+  padding: 3px 6px;
 }
 
 element-text {
-  text-color: inherit;
   vertical-align: 0.5;
 }
 
 message {
-  padding: 10px 16px;
+  padding: 4px 6px;
   border: 1px 0 0 0;
 }
 '
@@ -120,7 +99,7 @@ selection_index=$(
   rofi -dmenu -i -p "Dunst History" \
     -markup-rows \
     -sep $'\003' \
-    -eh 2 \
+    -eh 1 \
     -no-custom \
     -format i \
     -mesg '<span size="small">Type to filter. Enter prints the selected notification.</span>' \

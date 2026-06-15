@@ -17,7 +17,7 @@ case "$focused_workspace" in
 esac
 
 case "${prefix:-}:$focused_output" in
-    :HDMI-1|:HDMI-A-0)       prefix="R" ;;
+    :HDMI-1|:DisplayPort-1)  prefix="R" ;;
     :DP-3|:DisplayPort-2)    prefix="L" ;;
     :*)                      prefix="R" ;;
 esac

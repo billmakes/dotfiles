@@ -22,7 +22,7 @@ mapfile -t wallpapers < <(
 }
 
 print_entries() {
-  printf 'Random\n   <small>Pick a random wallpaper</small>\003'
+  printf 'Random\t<small><i>(Pick a random wallpaper)</i></small>\003'
 
   for index in "${!wallpapers[@]}"; do
     file="${wallpapers[$index]}"
@@ -34,7 +34,7 @@ print_entries() {
     escaped_title="$(escape_markup <<<"$title")"
     escaped_filename="$(escape_markup <<<"$filename")"
 
-    printf '%s  <b>%s</b>\n   <small>%s</small>\0icon\x1f%s\003' \
+    printf '%s  <b>%s</b>\t<small><i>(%s)</i></small>\0icon\x1f%s\003' \
       "$number" "$escaped_title" "$escaped_filename" "$file"
   done
 }
@@ -44,24 +44,6 @@ window {
   width: 760px;
   location: center;
   anchor: center;
-  border: 1px;
-  border-radius: 0;
-  padding: 0;
-}
-
-mainbox {
-  spacing: 0;
-}
-
-inputbar {
-  padding: 10px 12px;
-  spacing: 10px;
-  border: 0 0 1px 0;
-  children: [ prompt, entry ];
-}
-
-prompt {
-  font: "Monospace Bold 10";
 }
 
 entry {
@@ -75,22 +57,19 @@ listview {
   cycle: true;
   dynamic: true;
   scrollbar: false;
-  spacing: 4px;
-  padding: 8px;
+  spacing: 0;
+  padding: 2px;
 }
 
 element {
-  padding: 6px 8px;
-  spacing: 12px;
-  border-radius: 4px;
+  spacing: 8px;
 }
 
 element-icon {
-  size: 112px;
+  size: 18px;
 }
 
 element-text {
-  text-color: inherit;
   vertical-align: 0.5;
 }
 '
@@ -100,7 +79,7 @@ selection_index=$(
   rofi -dmenu -i -show-icons -p 'Wallpaper' \
     -markup-rows \
     -sep $'\003' \
-    -eh 2 \
+    -eh 1 \
     -no-custom \
     -format i \
     -theme-str "$rofi_theme"

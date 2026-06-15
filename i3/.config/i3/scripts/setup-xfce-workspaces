@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""
+Add i3 workspace GenMon buttons to xfce4-panel.
+
+What it does:
+  - Removes the XFCE pager (plugin-4) and its separator (plugin-5),
+    which show XFWM workspaces and are useless under i3.
+  - Inserts 10 GenMon plugins (L1-L5, R1-R5) after the app-menu button.
+  - Each GenMon plugin runs ~/.config/i3/scripts/genmon-workspace <WS>
+    at a 1-second interval with no label.
+
+Run once, then restart xfce4-panel:
+  python3 ~/.config/i3/scripts/setup-xfce-workspaces
+  xfce4-panel --restart
+"""
+
+import os
+import shutil
+import subprocess
+import sys
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+PANEL_XML = Path.home() / ".config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+SCRIPT    = str(Path.home() / ".config/i3/scripts/genmon-workspace")
+WORKSPACES = ["L1", "L2", "L3", "L4", "L5", "R1", "R2", "R3", "R4", "R5"]
+START_ID   = 15   # first new plugin ID; raises if collision found below
+
+REMOVE_IDS = {4, 5}   # pager + its separator
+
+# ── helpers ──────────────────────────────────────────────────────────────────
+
+def sub(parent, name, type_, value, children=()):
+    el = ET.SubElement(parent, "property")
+    el.set("name", name)
+    el.set("type", type_)
+    el.set("value", value)
+    for c in children:
+        el.append(c)
+    return el
+
+def val(type_, value):
+    el = ET.Element("value")
+    el.set("type", type_)
+    el.set("value", str(value))
+    return el
+
+# ── main ─────────────────────────────────────────────────────────────────────
+
+def main():
+    if not PANEL_XML.exists():
+        sys.exit(f"ERROR: {PANEL_XML} not found.")
+
+    # Check for ID collisions
+    tree = ET.parse(PANEL_XML)
+    root = tree.getroot()
+    plugins_prop = root.find("./property[@name='plugins']")
+    existing_ids = {
+        int(p.get("name").split("-")[1])
+        for p in plugins_prop.findall("property")
+        if p.get("name", "").startswith("plugin-")
+    }
+    new_ids = set(range(START_ID, START_ID + len(WORKSPACES)))
+    collision = new_ids & existing_ids
+    if collision:
+        sys.exit(f"ERROR: plugin IDs {sorted(collision)} already exist. Edit START_ID.")
+
+    # Backup
+    backup = PANEL_XML.with_suffix(".xml.bak")
+    shutil.copy2(PANEL_XML, backup)
+    print(f"Backed up → {backup}")
+
+    # ── 1. Rebuild plugin-ids array ──────────────────────────────────────────
+    panels_prop  = root.find("./property[@name='panels']")
+    panel1_prop  = panels_prop.find("property[@name='panel-1']")
+    ids_prop     = panel1_prop.find("property[@name='plugin-ids']")
+
+    old_ids = [int(v.get("value")) for v in ids_prop.findall("value")]
+    filtered = [i for i in old_ids if i not in REMOVE_IDS]
+
+    # Insert workspace IDs immediately after the app-menu (plugin-1)
+    try:
+        anchor = filtered.index(1)
+    except ValueError:
+        anchor = 0
+    ws_ids  = list(range(START_ID, START_ID + len(WORKSPACES)))
+    new_order = filtered[:anchor+1] + ws_ids + filtered[anchor+1:]
+
+    for v in ids_prop.findall("value"):
+        ids_prop.remove(v)
+    for id_val in new_order:
+        ids_prop.append(val("int", id_val))
+
+    print(f"plugin-ids → {new_order}")
+
+    # ── 2. Remove pager + separator plugin definitions ───────────────────────
+    for pid in sorted(REMOVE_IDS):
+        el = plugins_prop.find(f"property[@name='plugin-{pid}']")
+        if el is not None:
+            plugins_prop.remove(el)
+            print(f"Removed plugin-{pid} ({el.get('value')})")
+
+    # ── 3. Add GenMon plugin definitions ────────────────────────────────────
+    for i, ws in enumerate(WORKSPACES):
+        pid = START_ID + i
+        plugin_el = ET.SubElement(plugins_prop, "property")
+        plugin_el.set("name", f"plugin-{pid}")
+        plugin_el.set("type", "string")
+        plugin_el.set("value", "genmon")
+
+        sub(plugin_el, "Command",      "string", f"{SCRIPT} {ws}")
+        sub(plugin_el, "UpdatePeriod", "uint",   "1")
+        sub(plugin_el, "UseLabel",     "bool",   "false")
+
+        print(f"Added plugin-{pid}: genmon-workspace {ws}")
+
+    # ── 4. Write ─────────────────────────────────────────────────────────────
+    ET.indent(tree, space="  ")
+    # Write to a temp string first so we can fix the XML declaration
+    import io
+    buf = io.BytesIO()
+    tree.write(buf, xml_declaration=True, encoding="UTF-8")
+    xml_str = buf.getvalue().decode()
+    # xfce4 uses version="1.1"; ET writes 1.0 — fix it
+    xml_str = xml_str.replace(
+        '<?xml version=\'1.0\' encoding=\'UTF-8\'?>',
+        '<?xml version="1.1" encoding="UTF-8"?>'
+    )
+    PANEL_XML.write_text(xml_str)
+    print(f"Wrote {PANEL_XML}")
+
+    # ── 5. Restart panel ─────────────────────────────────────────────────────
+    print("Restarting xfce4-panel…")
+    subprocess.run(["xfce4-panel", "--restart"])
+    print("Done.")
+
+if __name__ == "__main__":
+    main()

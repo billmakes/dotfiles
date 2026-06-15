@@ -1,0 +1,139 @@
+#!/bin/sh
+
+set -eu
+
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+lock="${XDG_RUNTIME_DIR:-/tmp}/conky-workspaces-mod-overlay.lock"
+wid_cache=""
+
+exec 9>"$lock"
+flock -n 9 || exit 0
+
+window_id() {
+  if [ -n "${wid_cache:-}" ] && xwininfo -id "$wid_cache" >/dev/null 2>&1; then
+    printf '%s\n' "$wid_cache"
+    return 0
+  fi
+
+  wid_cache=$(xdotool search --class ConkyI3Workspaces 2>/dev/null | head -n1 || true)
+  if [ -z "${wid_cache:-}" ]; then
+    wid_cache=$(xwininfo -root -tree 2>/dev/null \
+      | awk '/"Conky i3 Workspaces": \("ConkyI3Workspaces"/ { print $1; exit }')
+  fi
+  printf '%s\n' "${wid_cache:-}"
+}
+
+raise_window() {
+  wid=$(window_id || true)
+  [ -n "${wid:-}" ] || return 0
+  python3 - "$wid" <<'PY' 2>/dev/null || true
+import ctypes, sys
+wid = int(sys.argv[1])
+x = ctypes.CDLL('libX11.so.6')
+x.XOpenDisplay.restype = ctypes.c_void_p
+d = x.XOpenDisplay(None)
+if not d:
+    sys.exit(1)
+x.XRaiseWindow(ctypes.c_void_p(d), ctypes.c_ulong(wid))
+x.XFlush(ctypes.c_void_p(d))
+x.XCloseDisplay(ctypes.c_void_p(d))
+PY
+}
+
+move_to_active_screen() {
+  wid=$(window_id || true)
+  [ -n "${wid:-}" ] || return 0
+
+  pos=$(i3-msg -t get_workspaces 2>/dev/null \
+    | jq -r '
+      .[] | select(.focused == true) |
+      "\(.rect.x) \(.rect.y)"
+    ')
+  [ -n "${pos:-}" ] || return 0
+  set -- $pos
+  screen_x=$1
+  screen_y=$2
+
+  x=$((screen_x + 4))
+  y=$((screen_y + 4))
+  xdotool windowmove "$wid" "$x" "$y" 2>/dev/null || true
+}
+
+show_window() {
+  wid=$(window_id || true)
+  [ -n "${wid:-}" ] || return 0
+  move_to_active_screen
+  xdotool windowmap "$wid" 2>/dev/null || true
+  raise_window
+}
+
+hide_window() {
+  wid=$(window_id || true)
+  [ -n "${wid:-}" ] || return 0
+  xdotool windowunmap "$wid" 2>/dev/null || true
+}
+
+mod_codes() {
+  xmodmap -pke 2>/dev/null | awk '/Super_L|Super_R/ { print $2 }' | tr -d ' ' | sort -u
+}
+
+master_kbd_id() {
+  xinput list 2>/dev/null \
+    | sed -n 's/.*id=\([0-9]\+\).*master keyboard.*/\1/p' \
+    | head -n1
+}
+
+codes=$(mod_codes | tr '\n' ' ')
+[ -n "$(printf '%s' "$codes" | tr -d ' ')" ] || exit 1
+
+# Start hidden. The workspace widget may be created after this script starts.
+# Wait briefly so login always begins with the overlay unmapped.
+tries=0
+while [ "$tries" -lt 50 ]; do
+  if [ -n "$(window_id || true)" ]; then
+    hide_window
+    break
+  fi
+  tries=$((tries + 1))
+  sleep 0.1
+done
+state=hidden
+
+while :; do
+  kbd=$(master_kbd_id)
+  if [ -z "${kbd:-}" ]; then
+    sleep 2
+    continue
+  fi
+
+  # Only RawKey* events — KeyPress/KeyRelease would double-fire each press.
+  xinput test-xi2 --root "$kbd" 2>/dev/null | while IFS= read -r line; do
+    case "$line" in
+      *"(RawKeyPress)"*)
+        event=press
+        ;;
+      *"(RawKeyRelease)"*)
+        event=release
+        ;;
+      *"    detail:"*)
+        code=$(printf '%s\n' "$line" | awk '{print $2}')
+        for mod_code in $codes; do
+          [ "$code" = "$mod_code" ] || continue
+          if [ "${event:-}" = press ] && [ "$state" != shown ]; then
+            show_window
+            state=shown
+          elif [ "${event:-}" = release ] && [ "$state" != hidden ]; then
+            hide_window
+            state=hidden
+          fi
+          break
+        done
+        ;;
+    esac
+  done
+
+  # xinput exited (device gone, X restart, etc.) — back off, retry.
+  sleep 2
+done

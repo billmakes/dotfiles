@@ -28,8 +28,7 @@ for index in "${!profiles[@]}"; do
   escaped_subtitle="$(escape_markup <<<"$subtitle")"
   escaped_command="$(escape_markup <<<"$command_name")"
 
-  entries+="$number  <b>$escaped_title</b>"$'\n'
-  entries+="   <small>$escaped_subtitle · $escaped_command</small>"$'\003'
+  entries+="$number  <b>$escaped_title</b>	<small><i>($escaped_subtitle · $escaped_command)</i></small>"$'\003'
 done
 
 rofi_theme='
@@ -37,24 +36,6 @@ window {
   width: 500px;
   location: center;
   anchor: center;
-  border: 1px;
-  border-radius: 0;
-  padding: 0;
-}
-
-mainbox {
-  spacing: 0;
-}
-
-inputbar {
-  padding: 10px 12px;
-  spacing: 10px;
-  border: 0 0 1px 0;
-  children: [ prompt, entry ];
-}
-
-prompt {
-  font: "Monospace Bold 10";
 }
 
 entry {
@@ -68,17 +49,15 @@ listview {
   cycle: true;
   dynamic: true;
   scrollbar: false;
-  spacing: 2px;
-  padding: 6px;
+  spacing: 0;
+  padding: 2px;
 }
 
 element {
-  padding: 5px 8px;
-  border-radius: 4px;
+  padding: 3px 6px;
 }
 
 element-text {
-  text-color: inherit;
   vertical-align: 0.5;
 }
 '
@@ -87,7 +66,7 @@ selection_index=$(
   rofi -dmenu -i -p 'Color Temperature' \
     -markup-rows \
     -sep $'\003' \
-    -eh 2 \
+    -eh 1 \
     -no-custom \
     -format i \
     -theme-str "$rofi_theme" <<<"$entries"

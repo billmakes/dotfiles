@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -eu
+
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+wid=$(xdotool search --class ConkyTint2Widget 2>/dev/null | head -n1 || true)
+[ -n "${wid:-}" ] || exit 0
+
+state=$(xwininfo -id "$wid" 2>/dev/null | awk '/Map State:/ {print $3}')
+
+if [ "$state" = "IsViewable" ]; then
+  xdotool windowunmap "$wid"
+else
+  xdotool windowmap "$wid"
+fi
